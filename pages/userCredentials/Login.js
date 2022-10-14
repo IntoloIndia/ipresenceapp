@@ -81,13 +81,13 @@ const Login = ({navigation}) => {
           </View>
           <TouchableOpacity
             style={{
-              backgroundColor: COLORS.black,
+              backgroundColor: COLORS.white,
               marginTop: SIZES.padding,
               padding: 10,
               alignItems: 'center',
               borderRadius: 5,
             }}>
-            <Text style={{color: COLORS.white}}>SignIn</Text>
+            <Text style={{color: COLORS.darkGray}}>SignIn</Text>
           </TouchableOpacity>
         </View>
       </View>
