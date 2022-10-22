@@ -26,7 +26,7 @@ const Payment = ({navigation}) => {
   const company_id = route.params.company_id;
   const [toggleCheckBox, setToggleCheckBox] = React.useState(false);
 
-  // confirm toast
+  // confirmation toast
   const [paymentSuccess, setPaymentSuccess] = React.useState(false);
   const [warn, setWarn] = React.useState(false);
   const [warnMessage, setWarnMessage] = React.useState('');
@@ -331,6 +331,8 @@ const Payment = ({navigation}) => {
       </Modal>
     );
   }
+  
+
 
   return (
     <View style={{flex: 1, backgroundColor: COLORS.green_700}}>
@@ -352,5 +354,6 @@ const Payment = ({navigation}) => {
     </View>
   );
 };
+
 
 export default Payment;
