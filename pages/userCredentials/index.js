@@ -1,8 +1,7 @@
-import Login from './Login';
-import Register from './Register';
-import VerifyKey from './VerifyKey';
+import SignIn from './SignIn';
+import SignUp from './SignUp';
+import ForgotPassword from './ForgotPassword';
+import VerifyProductKey from './VerifyProductKey';
 import Payment from './Payment';
-import NewLogin from './NewLogin';
-import NewSignUp from './NewSignUp';
 
-export {Login, Register, VerifyKey, Payment, NewLogin, NewSignUp};
+export {SignIn, SignUp, ForgotPassword, VerifyProductKey, Payment};

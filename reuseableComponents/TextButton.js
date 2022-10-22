@@ -14,12 +14,12 @@ const TextButton = ({
       style={{
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: COLORS.lightblue_700,
+        backgroundColor: COLORS.green_700,
         ...buttonContainerStyle,
       }}
       disabled={disabled}
       onPress={onPress}>
-      <Text style={{color: COLORS.white, ...FONTS.h3, ...labelStyle}}>
+      <Text style={{color: COLORS.white, ...FONTS.h5, ...labelStyle}}>
         {label}
       </Text>
     </TouchableOpacity>

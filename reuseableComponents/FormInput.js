@@ -1,55 +1,52 @@
 import React from 'react';
-import {View, Text, TextInput} from 'react-native';
+import {View, Text, TextInput, Image} from 'react-native';
 import {COLORS, FONTS, SIZES} from '../constants';
 
 const FormInput = ({
-  containerStyle,
-  label,
   placeholder,
   inputStyle,
-  prependComponent,
+  icon,
   appendComponent,
   onChange,
   secureTextEntry,
   keyboardType = 'default',
   autoCompleteType = 'off',
   autoCapitalize = 'none',
-  errorMsg = '',
+  containerStyle,
 }) => {
   return (
-    <View style={{...containerStyle}}>
-      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-        <Text
-          style={{
-            color: COLORS.darkGray,
-            ...FONTS.body4,
-          }}>
-          {label}
-        </Text>
-        <Text style={{color: COLORS.red, ...FONTS.body4}}>{errorMsg}</Text>
-      </View>
-      <View
+    <View
+      style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: COLORS.white,
+        borderRadius: 5,
+        height: 40,
+        paddingHorizontal: SIZES.radius,
+        marginTop: 12,
+        elevation: 3,
+        ...containerStyle,
+      }}>
+      <Image
+        source={icon}
         style={{
-          flexDirection: 'row',
-          height: 55,
-          paddingHorizontal: SIZES.padding,
-          marginTop: SIZES.base,
-          borderRadius: SIZES.radius,
-          backgroundColor: COLORS.lightGray2,
-        }}>
-        {prependComponent}
-        <TextInput
-          style={{flex: 1, ...inputStyle}}
-          placeholder={placeholder}
-          placeholderTextColor={COLORS.darkGray}
-          secureTextEntry={secureTextEntry}
-          keyboardType={keyboardType}
-          autoCompleteType={autoCompleteType}
-          autoCapitalize={autoCapitalize}
-          onChangeText={text => onChange(text)}
-        />
-        {appendComponent}
-      </View>
+          height: 18,
+          width: 18,
+          tintColor: COLORS.true_gray_700,
+          marginHorizontal: 8,
+        }}
+      />
+      <TextInput
+        style={{flex: 1, ...inputStyle}}
+        placeholder={placeholder}
+        placeholderTextColor={COLORS.true_gray_500}
+        secureTextEntry={secureTextEntry}
+        keyboardType={keyboardType}
+        autoCompleteType={autoCompleteType}
+        autoCapitalize={autoCapitalize}
+        onChangeText={text => onChange(text)}
+      />
+      {appendComponent}
     </View>
   );
 };

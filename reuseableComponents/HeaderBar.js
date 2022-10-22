@@ -3,7 +3,7 @@ import {View, Text, TouchableOpacity, Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {COLORS, SIZES, FONTS, icons} from '../constants';
 
-const HeaderBar = ({title}) => {
+const HeaderBar = ({title, titleColor, arrowColor}) => {
   const navigation = useNavigation();
   return (
     <View
@@ -18,15 +18,14 @@ const HeaderBar = ({title}) => {
           onPress={() => navigation.goBack()}>
           <Image
             source={icons.back}
-            style={{width: 20, height: 20, tintColor: COLORS.black}}
+            style={{width: 20, height: 20, tintColor: arrowColor}}
           />
         </TouchableOpacity>
         <Text
           style={{
             marginLeft: SIZES.radius,
             ...FONTS.h5,
-            color: COLORS.lightblue_900,
-            textTransform: 'capitalize',
+            color: titleColor,
           }}>
           {title}
         </Text>
