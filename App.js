@@ -31,36 +31,66 @@ import { PermissionsAndroid } from 'react-native';
 const App = () => {
     const [activeTab, setActiveTab] = useState('infoOne');
     const [uniqueID, setUniqueID] = useState({});
-    const [ssID, setSsID] = useState({});
+    const [wifiSsidList, setWifiSsidList] = useState([]);
+    const [ssID, setSsID] = useState(null);
     const [connectionStatus, setConnectionStatus] = useState(false);
 
     const netData = useNetInfo();
 
     const getDeviceData = async () => {
-      const deviceJSON = {};
-      deviceJSON.deviceUniqueId = DeviceInfo.getUniqueId(); //get device unique id
-      setTimeout(() => {
-          // console.log(JSON.stringify(deviceJSON.deviceUniqueId._j)) // only unique id
-          console.log(JSON.stringify(deviceJSON))
-          console.log(netData);
-          // alert(JSON.stringify(deviceJSON))
-      }, 100);  
+        const deviceJSON = {};
+        deviceJSON.deviceUniqueId = DeviceInfo.getUniqueId(); //get device unique id
+        setTimeout(() => {
+            // console.log(JSON.stringify(deviceJSON.deviceUniqueId._j)) // only unique id
+            console.log(JSON.stringify(deviceJSON))
+            console.log(netData);
+            // alert(JSON.stringify(deviceJSON))
+        }, 100);  
 
-      let wifiList = await WifiManager.loadWifiList(); //wifiList will be Array<WifiEntry>
-      console.log('wifi list',wifiList);
-      wifiList.forEach(list => {
-        list.SSID === 'SDD3' ? console.log(list.SSID) : console.log("null");
-        // if (list.SSID === 'maa’s iPhone' ) {
-        //   alert(list.SSID);
-        // }else{
-        //   alert("not found");
-
-        // }
-        console.log(list.SSID)
-      });
+      getWiFiList();
 
     }
 
+    const getWiFiList = async () => {
+        // let wifiList = await WifiManager.loadWifiList();
+        // setSsID(null);
+        const re_scan_wifi_list = await WifiManager.reScanAndLoadWifiList();
+
+        console.log('rescan wifi list', re_scan_wifi_list);
+        for (const list of re_scan_wifi_list) {
+            if (list.SSID === 'F17') {
+                setSsID(list.SSID);
+                console.log('inside loop ' + list.SSID);
+                console.log(ssID);
+                // alert("You are presented now")
+                return false;
+            }
+        }
+        // re_scan_wifi_list.forEach(list => {
+        //     // list.SSID === 'SDD3' ? setSsID(list.SSID)  : console.log("null");
+        //     if (list.SSID === 'F17') {
+        //         console.log('inside loop '+list.SSID);
+        //         setSsID(list.SSID);
+        //         // alert("You are presented now")
+        //         return ;
+        //     }
+        // });
+        
+    }
+
+    // setInterval(() => {
+    //     getWiFiList()
+    // }, 4000);
+
+    console.log("object")
+
+    useEffect( () => {
+        setInterval(() => {
+            getWiFiList();
+        }, 2000);
+    },[]);
+
+    // console.log(ssID);
     // const getNetInfo = () => {
     //   NetInfo.fetch().then(state => {
     //     console.log(state);
