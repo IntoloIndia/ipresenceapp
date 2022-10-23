@@ -9,14 +9,12 @@ import {
   VerifyProductKey,
 } from './pages/userCredentials';
 import Tabs from './navigation/Tabs';
-
 import store from './src/app/store';
 import {Provider} from 'react-redux';
 
 const Stack = createStackNavigator();
 
 const App = () => {
-
   return (
     <Provider store={store}>
       <NavigationContainer>
@@ -36,5 +34,3 @@ const App = () => {
 };
 
 export default App;
-
-

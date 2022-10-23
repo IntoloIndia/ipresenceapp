@@ -331,8 +331,6 @@ const Payment = ({navigation}) => {
       </Modal>
     );
   }
-  
-
 
   return (
     <View style={{flex: 1, backgroundColor: COLORS.green_700}}>
@@ -354,6 +352,5 @@ const Payment = ({navigation}) => {
     </View>
   );
 };
-
 
 export default Payment;

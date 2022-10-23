@@ -1,4 +1,3 @@
-
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import {
   setCompanyId,
@@ -6,7 +5,6 @@ import {
   storeToken,
   removeToken,
 } from './asyncStorageService';
-// import Config from '../config';
 import {LOCAL_API_URL} from '@env';
 
 export const STATUSES = Object.freeze({
@@ -42,18 +40,18 @@ export const companySlice = createSlice({
         (state.status = STATUSES.IDLE);
     },
 
-    companyLogout: (state, action) => {
-      (state.token = null),
-        (state.refresh_token = null),
-        (state._id = null),
-        (state.company_name = null),
-        (state.name = null),
-        (state.mobile = null),
-        (state.email = null),
-        (state.status = STATUSES.LOGOUT);
-      removeToken('token');
-      removeCompanyId('company_id');
-    },
+    // companyLogout: (state, action) => {
+    //   (state.token = null),
+    //     (state.refresh_token = null),
+    //     (state._id = null),
+    //     (state.company_name = null),
+    //     (state.name = null),
+    //     (state.mobile = null),
+    //     (state.email = null),
+    //     (state.status = STATUSES.LOGOUT);
+    //   removeToken('token');
+    //   removeCompanyId('company_id');
+    // },
   },
 
   extraReducers: builder => {
@@ -93,16 +91,18 @@ export const companySlice = createSlice({
       })
       .addCase(companyLogin.fulfilled, (state, action) => {
         if (action.payload.status === 200) {
-          state.status = STATUSES.IDLE;
-          state.token = action.payload.access_token;
-          state.refresh_token = action.payload.refresh_token;
-          state._id = action.payload._id;
-          state.company_name = action.payload.company_name;
-          state.name = action.payload.name;
-          state.mobile = action.payload.mobile;
-          state.email = action.payload.email;
-          setCompanyId(action.payload._id);
-          storeToken(action.payload.access_token);
+
+          console.log(action.payload)
+          // state.status = STATUSES.IDLE;
+          // state.token = action.payload.access_token;
+          // state.refresh_token = action.payload.refresh_token;
+          // state._id = action.payload._id;
+          // state.company_name = action.payload.company_name;
+          // state.name = action.payload.name;
+          // state.mobile = action.payload.mobile;
+          // state.email = action.payload.email;
+          // setCompanyId(action.payload._id);
+          // storeToken(action.payload.access_token);
         }
       })
       .addCase(companyLogin.rejected, (state, action) => {
@@ -118,7 +118,7 @@ export default companySlice.reducer;
 export const registerCompany = createAsyncThunk(
   'company/register',
   async companyData => {
-    const res = await fetch(Config.API_URL + 'company', {
+    const res = await fetch(LOCAL_API_URL + 'company', {
       method: 'post',
       body: JSON.stringify(companyData),
       headers: {
@@ -134,7 +134,7 @@ export const registerCompany = createAsyncThunk(
 export const verifyProductKey = createAsyncThunk(
   'company/verify_product_key',
   async productKey => {
-    const res = await fetch(Config.API_URL + 'verify-product-key', {
+    const res = await fetch(LOCAL_API_URL + 'verify-product-key', {
       method: 'post',
       body: JSON.stringify(productKey),
       headers: {
@@ -150,7 +150,7 @@ export const verifyProductKey = createAsyncThunk(
 export const companyLogin = createAsyncThunk(
   'company/login',
   async companyData => {
-    const res = await fetch(Config.API_URL + 'company-login', {
+    const res = await fetch(LOCAL_API_URL + 'company-login', {
       method: 'post',
       body: JSON.stringify(companyData),
       headers: {

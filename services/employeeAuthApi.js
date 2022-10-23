@@ -1,5 +1,3 @@
-
-
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import {
   setUserId,
@@ -7,7 +5,6 @@ import {
   storeToken,
   removeToken,
 } from './asyncStorageService';
-// import Config from '../config';
 import {LOCAL_API_URL} from '@env';
 import {constants} from '../constants';
 
@@ -37,15 +34,15 @@ export const userSlice = createSlice({
   reducers: {
     setUserToken: (state, action) => {
       (state.token = action.payload.access_token),
-      (state.refresh_token = action.payload.refresh_token),
-      (state._id = action.payload._id),
-      (state.user_id = action.payload._id),
-      (state.company_id = action.payload.company_id),
-      (state.company_name = action.payload.company_name),
-      (state.name = action.payload.name),
-      (state.mobile = action.payload.mobile),
-      (state.email = action.payload.email),
-      (state.status = STATUSES.IDLE);
+        (state.refresh_token = action.payload.refresh_token),
+        (state._id = action.payload._id),
+        (state.user_id = action.payload._id),
+        (state.company_id = action.payload.company_id),
+        (state.company_name = action.payload.company_name),
+        (state.name = action.payload.name),
+        (state.mobile = action.payload.mobile),
+        (state.email = action.payload.email),
+        (state.status = STATUSES.IDLE);
     },
 
     userLogout: (state, action) => {
@@ -117,7 +114,7 @@ export const {setUserToken, userLogout} = userSlice.actions;
 export default userSlice.reducer;
 
 export const userLogin = createAsyncThunk('user/login', async userData => {
-  const res = await fetch(process.env.API_URL + 'login', {
+  const res = await fetch(process.env.LOCAL_API_URL + 'login', {
     method: 'post',
     body: JSON.stringify(userData),
     headers: {
