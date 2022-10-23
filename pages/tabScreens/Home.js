@@ -3,9 +3,13 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import {LOCAL_API_URL} from '@env';
 import {ConfirmToast} from '../../reuseableComponents';
 import {COLORS, icons} from '../../constants';
+import {useSelector} from 'react-redux';
 
 const Home = () => {
+  const companyDetail = useSelector(state => state.company);
+  console.log("Home", companyDetail);
   const [ms, sms] = React.useState(false);
+
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       <ConfirmToast

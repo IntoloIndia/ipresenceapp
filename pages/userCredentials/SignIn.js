@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   KeyboardAvoidingView,
@@ -9,10 +9,13 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import {FormInput, TextButton} from '../../reuseableComponents';
-import {COLORS, FONTS, icons, images} from '../../constants';
+import { FormInput, TextButton } from '../../reuseableComponents';
+import { COLORS, FONTS, icons, images } from '../../constants';
 
-const SignIn = ({navigation}) => {
+import { companyLogin } from '../../services/companyAuthApi';
+import { useDispatch } from 'react-redux';
+const SignIn = ({ navigation }) => {
+  const dispatch = useDispatch();
   //team
   const [teamMobileNo, setTeamMobileNo] = useState('');
   const [teamPassword, setTeamPassword] = useState('');
@@ -24,14 +27,19 @@ const SignIn = ({navigation}) => {
   const [loginPreference, setLoginPreference] = useState(false);
 
   // on change handler
-  const loginHandler = () => {
-    if (loginPreference == true) {
-      setTeamMobileNo('');
-      setTeamPassword('');
-    } else {
-      setCompanyMobileNo('');
-      setCompanyPassword('');
+  const loginHandler = async () => {
+    const companyData = {
+      mobile: companyMobileNo,
+      password: companyPassword,
+    };
+
+    const res = await dispatch(companyLogin(companyData));
+    // console.log("sadfhj",res.payload.status);
+
+    if (res.payload.status) {
+      navigation.navigate('Tabs')
     }
+
   };
 
   function renderTeamSignIn() {
@@ -67,9 +75,9 @@ const SignIn = ({navigation}) => {
           }
         />
         <TouchableOpacity
-          style={{alignItems: 'flex-end', marginTop: 5}}
+          style={{ alignItems: 'flex-end', marginTop: 5 }}
           onPress={() => navigation.navigate('ForgotPassword')}>
-          <Text style={{...FONTS.h4, color: COLORS.darkGray}}>
+          <Text style={{ ...FONTS.h4, color: COLORS.darkGray }}>
             Forgot Password ?
           </Text>
         </TouchableOpacity>
@@ -120,9 +128,9 @@ const SignIn = ({navigation}) => {
           }
         />
         <TouchableOpacity
-          style={{alignItems: 'flex-end', marginTop: 5}}
+          style={{ alignItems: 'flex-end', marginTop: 5 }}
           onPress={() => navigation.navigate('ForgotPassword')}>
-          <Text style={{...FONTS.h4, color: COLORS.darkGray}}>
+          <Text style={{ ...FONTS.h4, color: COLORS.darkGray }}>
             Forgot Password ?
           </Text>
         </TouchableOpacity>
@@ -134,7 +142,7 @@ const SignIn = ({navigation}) => {
             alignItems: 'center',
             borderRadius: 5,
           }}
-          onPress={() => alert('Company Sign in')}
+          onPress={() => loginHandler()}
         />
       </View>
     );
@@ -144,16 +152,16 @@ const SignIn = ({navigation}) => {
     return (
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : null}
-        style={{flex: 1}}>
+        style={{ flex: 1 }}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View style={{padding: 20, flex: 1, justifyContent: 'space-around'}}>
+          <View style={{ padding: 20, flex: 1, justifyContent: 'space-around' }}>
             <View
               style={{
                 alignItems: 'center',
                 alignSelf: 'center',
                 marginBottom: 50,
               }}>
-              <Image source={images.logo} style={{height: 90, width: 280}} />
+              <Image source={images.logo} style={{ height: 90, width: 280 }} />
               <Text
                 style={{
                   fontSize: 30,
@@ -163,7 +171,7 @@ const SignIn = ({navigation}) => {
                 }}>
                 Welcome Back
               </Text>
-              <Text style={{...FONTS.h4, color: COLORS.darkGray}}>
+              <Text style={{ ...FONTS.h4, color: COLORS.darkGray }}>
                 Sign in to continue
               </Text>
             </View>
@@ -185,8 +193,8 @@ const SignIn = ({navigation}) => {
                 }}
                 onPress={() => {
                   loginPreference == true
-                    ? (setLoginPreference(false), loginHandler())
-                    : (setLoginPreference(true), loginHandler());
+                    ? (setLoginPreference(false))
+                    : (setLoginPreference(true));
                 }}>
                 {loginPreference && (
                   <Image
@@ -222,7 +230,7 @@ const SignIn = ({navigation}) => {
                   />
                 )}
               </TouchableOpacity>
-              <View style={{marginTop: 40}}>
+              <View style={{ marginTop: 40 }}>
                 {loginPreference == true
                   ? renderCompanySignIn()
                   : renderTeamSignIn()}
@@ -240,7 +248,7 @@ const SignIn = ({navigation}) => {
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}>
-                <Text style={{...FONTS.h4, color: COLORS.darkGray}}>
+                <Text style={{ ...FONTS.h4, color: COLORS.darkGray }}>
                   Don't have an account ?
                 </Text>
                 <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
@@ -270,7 +278,7 @@ const SignIn = ({navigation}) => {
                   }}>
                   <Image
                     source={icons.email_circle}
-                    style={{height: 20, width: 20}}
+                    style={{ height: 20, width: 20 }}
                   />
                 </TouchableOpacity>
 
@@ -282,7 +290,7 @@ const SignIn = ({navigation}) => {
                   }}>
                   <Image
                     source={icons.linkedin}
-                    style={{height: 20, width: 20}}
+                    style={{ height: 20, width: 20 }}
                   />
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -293,7 +301,7 @@ const SignIn = ({navigation}) => {
                   }}>
                   <Image
                     source={icons.website}
-                    style={{height: 20, width: 20}}
+                    style={{ height: 20, width: 20 }}
                   />
                 </TouchableOpacity>
               </View>
@@ -305,7 +313,7 @@ const SignIn = ({navigation}) => {
   }
 
   return (
-    <View style={{flex: 1, backgroundColor: COLORS.green_50}}>
+    <View style={{ flex: 1, backgroundColor: COLORS.green_50 }}>
       {renderSignIn()}
     </View>
   );
