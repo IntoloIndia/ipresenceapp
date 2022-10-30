@@ -1,56 +1,8 @@
-import {LOCAL_API_URL} from '@env';
+import {API_URL} from '@env';
 
-const companyRegistration = async formData => {
+const getDepartment = async company_id => {
   try {
-    const res = await fetch(`${LOCAL_API_URL}register-company`, {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    });
-    const data = await res.json();
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const verifyCompanyProductKey = async formData => {
-  try {
-    const res = await fetch(`${LOCAL_API_URL}verify-product-key`, {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    });
-    const data = await res.json();
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const companyProductPayment = async formData => {
-  try {
-    const res = await fetch(`${LOCAL_API_URL}payment`, {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    });
-    const data = await res.json();
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const get = async () => {
-  try {
-    const res = await fetch(LOCAL_API_URL, {
+    const res = await fetch(API_URL + 'department/' + company_id, {
       method: 'get',
       headers: {
         'Content-Type': 'application/json',
@@ -63,4 +15,50 @@ const get = async () => {
   }
 };
 
-export {companyRegistration, verifyCompanyProductKey, companyProductPayment};
+const postDepartment = async formData => {
+  try {
+    const res = await fetch(API_URL + 'department', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const editDepartment = async (id, formData) => {
+  try {
+    const res = await fetch(API_URL + 'update-department/' + id, {
+      method: 'put',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const deleteDepartment = async id => {
+  try {
+    const res = await fetch(API_URL + 'department/' + id, {
+      method: 'delete',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export {getDepartment, postDepartment, editDepartment, deleteDepartment};

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {
   View,
   KeyboardAvoidingView,
@@ -8,14 +8,25 @@ import {
   Keyboard,
   Image,
   TouchableOpacity,
+  Animated,
+  Dimensions,
+  ScrollView,
+  StyleSheet,
 } from 'react-native';
-import {FormInput, TextButton} from '../../reuseableComponents';
+import {FormInput, TextButton, ConfirmToast} from '../../reuseableComponents';
 import {COLORS, FONTS, icons, images} from '../../constants';
+import {companyLogin} from '../../services/companyAuthApi';
+import {userLogin} from '../../services/employeeAuthApi';
+import {useDispatch} from 'react-redux';
+
+const {width} = Dimensions.get('window');
 
 const SignIn = ({navigation}) => {
+  const dispatch = useDispatch();
+
   //team
-  const [teamMobileNo, setTeamMobileNo] = useState('');
-  const [teamPassword, setTeamPassword] = useState('');
+  const [employeeId, setEmployeeId] = useState('');
+  const [employeePassword, setEmployeePassword] = useState('');
   //company
   const [companyMobileNo, setCompanyMobileNo] = useState('');
   const [companyPassword, setCompanyPassword] = useState('');
@@ -23,31 +34,70 @@ const SignIn = ({navigation}) => {
   const [showPass, setShowPass] = useState(false);
   const [loginPreference, setLoginPreference] = useState(false);
 
-  // on change handler
-  const loginHandler = () => {
-    if (loginPreference == true) {
-      setTeamMobileNo('');
-      setTeamPassword('');
-    } else {
+  // confirm toast
+  const [success, setSuccess] = React.useState(false);
+  const [warn, setWarn] = React.useState(false);
+  const [warnMessage, setWarnMessage] = React.useState('');
+
+  // company login
+  const CompanyLoginHandler = async () => {
+    const companyData = {
+      mobile: companyMobileNo,
+      password: companyPassword,
+    };
+    const response = await dispatch(companyLogin(companyData));
+    if (response.payload.status) {
+      setSuccess(true);
       setCompanyMobileNo('');
       setCompanyPassword('');
+      setTimeout(() => {
+        navigation.navigate('Tabs');
+      }, 2500);
+    } else {
+      setWarnMessage(response.payload.message);
+      setWarn(true);
     }
+    setTimeout(() => {
+      setSuccess(false);
+    }, 2000);
+  };
+
+  // company login
+  const EmployeeLoginHandler = async () => {
+    const employeeData = {
+      emp_id: employeeId,
+      password: employeePassword,
+    };
+    const response = await dispatch(userLogin(employeeData));
+    if (response.payload.status) {
+      setSuccess(true);
+      setEmployeeId('');
+      setEmployeePassword('');
+      setTimeout(() => {
+        navigation.navigate('Tabs');
+      }, 2500);
+    } else {
+      setWarnMessage(response.payload.message);
+      setWarn(true);
+    }
+    setTimeout(() => {
+      setSuccess(false);
+    }, 2000);
   };
 
   function renderTeamSignIn() {
     return (
       <View>
         <FormInput
-          placeholder="Mobile"
-          keyboardType="number-pad"
-          icon={icons.call}
-          onChange={text => setTeamMobileNo(text)}
+          placeholder="Emp Unique Id"
+          icon={icons.profile}
+          onChange={text => setEmployeeId(text)}
         />
         <FormInput
           placeholder="Password"
           icon={icons.password}
           secureTextEntry={!showPass}
-          onChange={text => setTeamPassword(text)}
+          onChange={text => setEmployeePassword(text)}
           appendComponent={
             <TouchableOpacity
               style={{
@@ -81,7 +131,7 @@ const SignIn = ({navigation}) => {
             alignItems: 'center',
             borderRadius: 5,
           }}
-          onPress={() => alert('Team Sign in')}
+          onPress={() => EmployeeLoginHandler()}
         />
       </View>
     );
@@ -134,7 +184,7 @@ const SignIn = ({navigation}) => {
             alignItems: 'center',
             borderRadius: 5,
           }}
-          onPress={() => alert('Company Sign in')}
+          onPress={() => CompanyLoginHandler()}
         />
       </View>
     );
@@ -185,8 +235,8 @@ const SignIn = ({navigation}) => {
                 }}
                 onPress={() => {
                   loginPreference == true
-                    ? (setLoginPreference(false), loginHandler())
-                    : (setLoginPreference(true), loginHandler());
+                    ? setLoginPreference(false)
+                    : setLoginPreference(true);
                 }}>
                 {loginPreference && (
                   <Image
@@ -304,11 +354,147 @@ const SignIn = ({navigation}) => {
     );
   }
 
+  // tab buttons
+  function SwiperPagerButton() {
+    const scrollX = useRef(new Animated.Value(0)).current;
+    const buttons = ['User', 'Company'];
+    const onCLick = i => this.scrollView.scrollTo({x: i * width});
+    return (
+      <View style={styles.container}>
+        <View style={{padding: 5, paddingTop: 0}}>
+          <ButtonContainer
+            buttons={buttons}
+            onClick={onCLick}
+            scrollX={scrollX}
+          />
+        </View>
+        <ScrollView
+          ref={e => (this.scrollView = e)}
+          horizontal
+          pagingEnabled
+          decelerationRate="fast"
+          showsHorizontalScrollIndicator={false}
+          onScroll={Animated.event(
+            [{nativeEvent: {contentOffset: {x: scrollX}}}],
+            {useNativeDriver: false},
+          )}>
+          {buttons.map((x, i) => (
+            <View style={[styles.card]} key={x}>
+              {i === 0 ? renderTeamSignIn() : renderCompanySignIn()}
+            </View>
+          ))}
+        </ScrollView>
+      </View>
+    );
+  }
+
+  function ButtonContainer({buttons, onClick, scrollX}) {
+    const [btnContainerWidth, setWidth] = useState(0);
+    const btnWidth = btnContainerWidth / buttons.length;
+    const translateX = scrollX.interpolate({
+      inputRange: [0, width],
+      outputRange: [0, btnWidth],
+    });
+    const translateXOpposit = scrollX.interpolate({
+      inputRange: [0, width],
+      outputRange: [0, -btnWidth],
+    });
+    return (
+      <View
+        style={styles.btnContainer}
+        onLayout={e => setWidth(e.nativeEvent.layout.width)}>
+        {buttons.map((btn, i) => (
+          <TouchableOpacity
+            key={btn}
+            style={styles.btn}
+            onPress={() => onClick(i)}>
+            <Text>{btn}</Text>
+          </TouchableOpacity>
+        ))}
+        <Animated.View
+          style={[
+            styles.animatedBtnContainer,
+            {width: btnWidth, transform: [{translateX}]},
+          ]}>
+          {buttons.map(btn => (
+            <Animated.View
+              key={btn}
+              style={[
+                styles.animatedBtn,
+                {width: btnWidth, transform: [{translateX: translateXOpposit}]},
+              ]}>
+              <Text style={styles.btnTextActive}>{btn}</Text>
+            </Animated.View>
+          ))}
+        </Animated.View>
+      </View>
+    );
+  }
+
   return (
     <View style={{flex: 1, backgroundColor: COLORS.green_50}}>
       {renderSignIn()}
+      <ConfirmToast
+        isVisible={success}
+        onClose={() => setSuccess(false)}
+        bgColor={COLORS.green_700}
+        icon={icons.success}
+        message={"You're Logged In Successfully"}
+      />
+
+      <ConfirmToast
+        isVisible={warn}
+        onClose={() => setWarn(false)}
+        bgColor={COLORS.error}
+        icon={icons.warning}
+        message={warnMessage}
+      />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingVertical: 5,
+  },
+  btnContainer: {
+    height: 40,
+    borderRadius: 5,
+    overflow: 'hidden',
+    flexDirection: 'row',
+    backgroundColor: '#00000011',
+    // width: '100%',
+  },
+  btn: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  animatedBtnContainer: {
+    height: 40,
+    flexDirection: 'row',
+    position: 'absolute',
+    overflow: 'hidden',
+    backgroundColor: '#444',
+  },
+  animatedBtn: {
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  btnTextActive: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  card: {
+    width: width - 10,
+    // height: '100%',
+    marginHorizontal: 5,
+    borderRadius: 5,
+    backgroundColor: COLORS.true_gray_400,
+    padding: 20,
+  },
+});
 
 export default SignIn;

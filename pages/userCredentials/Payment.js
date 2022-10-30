@@ -19,7 +19,7 @@ import {
 } from '../../reuseableComponents';
 import CheckBox from '@react-native-community/checkbox';
 import {useRoute} from '@react-navigation/native';
-import {companyProductPayment} from '../apiController/CompanySignup';
+import {companyProductPayment} from '../apiController/CompanySignupController';
 
 const Payment = ({navigation}) => {
   const route = useRoute();
