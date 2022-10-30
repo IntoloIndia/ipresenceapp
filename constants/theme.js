@@ -23,6 +23,12 @@ export const COLORS = {
   yellow_300: '#fde047',
   yellow_400: '#facc15',
   yellow_500: '#eab308',
+  yellow_600: '#ca8a04',
+  
+  //amber
+  amber_500: '#f59e0b',
+  amber_600: '#d97706',
+
 
   //true gray
   true_gray_50: '#fafafa',

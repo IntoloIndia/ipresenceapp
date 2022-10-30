@@ -8,6 +8,7 @@ const FormInput = ({
   icon,
   appendComponent,
   onChange,
+  value,
   secureTextEntry,
   keyboardType = 'default',
   autoCompleteType = 'off',
@@ -23,21 +24,22 @@ const FormInput = ({
         borderRadius: 5,
         height: 40,
         paddingHorizontal: SIZES.radius,
-        marginTop: 12,
+        marginTop: 5,
+        marginBottom: 10,
         elevation: 3,
         ...containerStyle,
       }}>
       <Image
         source={icon}
         style={{
-          height: 18,
-          width: 18,
+          height: 15,
+          width: 15,
           tintColor: COLORS.true_gray_700,
           marginHorizontal: 8,
         }}
       />
       <TextInput
-        style={{flex: 1, ...inputStyle}}
+        style={{flex: 1, ...inputStyle, color:COLORS.true_gray_800}}
         placeholder={placeholder}
         placeholderTextColor={COLORS.true_gray_500}
         secureTextEntry={secureTextEntry}
@@ -45,6 +47,7 @@ const FormInput = ({
         autoCompleteType={autoCompleteType}
         autoCapitalize={autoCapitalize}
         onChangeText={text => onChange(text)}
+        value={value}
       />
       {appendComponent}
     </View>

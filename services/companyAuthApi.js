@@ -1,11 +1,5 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import {
-  setCompanyId,
-  removeCompanyId,
-  storeToken,
-  removeToken,
-} from './asyncStorageService';
-import { API_URL } from '@env';
+import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+import {API_URL} from '@env';
 
 export const STATUSES = Object.freeze({
   IDLE: 'idle',
@@ -32,28 +26,26 @@ export const companySlice = createSlice({
   reducers: {
     setCompanyToken: (state, action) => {
       (state._id = action.payload._id),
-      (state.company_id = action.payload._id),
-      (state.company_name = action.payload.company_name),
-      (state.name = action.payload.name),
-      (state.mobile = action.payload.mobile),
-      (state.email = action.payload.email),
-      (state.token = action.payload.access_token),
-      (state.refresh_token = action.payload.refresh_token),
-      (state.status = STATUSES.IDLE);
+        (state.company_id = action.payload._id),
+        (state.company_name = action.payload.company_name),
+        (state.name = action.payload.name),
+        (state.mobile = action.payload.mobile),
+        (state.email = action.payload.email),
+        (state.token = action.payload.access_token),
+        (state.refresh_token = action.payload.refresh_token),
+        (state.status = STATUSES.IDLE);
     },
 
     companyLogout: (state, action) => {
       (state._id = null),
-      (state.company_id = null),
-      (state.company_name = null),
-      (state.name = null),
-      (state.mobile = null),
-      (state.email = null),
-      (state.token = null),
-      (state.refresh_token = null),
-      (state.status = STATUSES.LOGOUT);
-      // removeToken('token');
-      // removeCompanyId('company_id');
+        (state.company_id = null),
+        (state.company_name = null),
+        (state.name = null),
+        (state.mobile = null),
+        (state.email = null),
+        (state.token = null),
+        (state.refresh_token = null),
+        (state.status = STATUSES.LOGOUT);
     },
   },
 
@@ -74,8 +66,6 @@ export const companySlice = createSlice({
           state.email = action.payload.email;
           state.token = action.payload.access_token;
           state.refresh_token = action.payload.refresh_token;
-          // setCompanyId(action.payload._id);
-          // storeToken(action.payload.access_token);
         }
       })
       .addCase(companyLogin.rejected, (state, action) => {
@@ -84,7 +74,7 @@ export const companySlice = createSlice({
   },
 });
 
-export const { setCompanyToken, companyLogout } = companySlice.actions;
+export const {setCompanyToken, companyLogout} = companySlice.actions;
 export default companySlice.reducer;
 
 //login company

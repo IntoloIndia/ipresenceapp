@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Home, Profile, Account, Calendar} from '../pages/tabScreens';
+import {Home, Profile, Account, More} from '../pages/tabScreens';
 import {COLORS, icons} from '../constants';
 import {TabIcon} from '../reuseableComponents';
 
@@ -53,16 +53,12 @@ export default function App() {
         }}
       />
       <Tab.Screen
-        name="Calendar"
-        component={Calendar}
+        name="More"
+        component={More}
         options={{
           headerShown: false,
           tabBarIcon: ({focused}) => (
-            <TabIcon
-              focused={focused}
-              icon={icons.calendar}
-              name={'Calendar'}
-            />
+            <TabIcon focused={focused} icon={icons.more} name={'More'} />
           ),
         }}
       />

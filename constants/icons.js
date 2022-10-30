@@ -27,6 +27,15 @@ const warning = require('../assets/icons/warning.png');
 const close = require('../assets/icons/close.png');
 const accept = require('../assets/icons/accept.png');
 const success = require('../assets/icons/success.png');
+const right_arr1 = require('../assets/icons/right_arr_1.png');
+const right_arr2 = require('../assets/icons/right_arr_2.png');
+const name = require('../assets/icons/name.png');
+const plus = require('../assets/icons/plus.png');
+const designation = require('../assets/icons/designation.png');
+const department = require('../assets/icons/department.png');
+const edit = require('../assets/icons/edit.png');
+const update = require('../assets/icons/update.png');
+const device_config = require('../assets/icons/device_config.png');
 
 //social icons
 const phone = require('../assets/icons/social_icons/phone.png');
@@ -40,6 +49,7 @@ const home = require('../assets/icons/tab_icons/home.png');
 const profile = require('../assets/icons/tab_icons/profile.png');
 const account = require('../assets/icons/tab_icons/account.png');
 const calendar = require('../assets/icons/tab_icons/calendar.png');
+const more = require('../assets/icons/tab_icons/more.png');
 
 export default {
   user,
@@ -71,6 +81,15 @@ export default {
   close,
   accept,
   success,
+  right_arr1,
+  right_arr2,
+  name,
+  plus,
+  designation,
+  department,
+  edit,
+  update,
+  device_config,
   //social
   phone,
   email_circle,
@@ -82,4 +101,5 @@ export default {
   profile,
   account,
   calendar,
+  more,
 };
