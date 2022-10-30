@@ -16,7 +16,7 @@ import {
   ConfirmToast,
 } from '../../reuseableComponents';
 import {useRoute} from '@react-navigation/native';
-import {verifyCompanyProductKey} from '../apiController/CompanySignup';
+import {verifyCompanyProductKey} from '../apiController/CompanySignupController';
 
 const VerifyProductKey = ({navigation}) => {
   const route = useRoute();

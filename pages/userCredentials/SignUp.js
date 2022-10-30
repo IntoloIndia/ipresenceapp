@@ -16,7 +16,7 @@ import {
   TextButton,
   ConfirmToast,
 } from '../../reuseableComponents';
-import {companyRegistration} from '../apiController';
+import {companyRegistration} from '../apiController/CompanySignupController';
 
 const SignUp = ({navigation}) => {
   const [companyName, setCompanyName] = React.useState('');

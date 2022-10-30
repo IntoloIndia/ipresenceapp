@@ -19,7 +19,7 @@ import {
 } from '../../reuseableComponents';
 import CheckBox from '@react-native-community/checkbox';
 import {useRoute} from '@react-navigation/native';
-import {companyProductPayment} from '../apiController/CompanySignup';
+import {companyProductPayment} from '../apiController/CompanySignupController';
 
 const Payment = ({navigation}) => {
   const route = useRoute();
@@ -331,8 +331,6 @@ const Payment = ({navigation}) => {
       </Modal>
     );
   }
-  
-
 
   return (
     <View style={{flex: 1, backgroundColor: COLORS.green_700}}>
@@ -354,6 +352,5 @@ const Payment = ({navigation}) => {
     </View>
   );
 };
-
 
 export default Payment;
