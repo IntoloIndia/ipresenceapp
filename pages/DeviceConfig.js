@@ -18,8 +18,7 @@ import NetInfo, {useNetInfo} from '@react-native-community/netinfo';
 const DeviceConfig = () => {
   // company data from redux
   const companyDetail = useSelector(state => state.company);
-  // const company_id = companyDetail._id;
-  const company_id = '63515388d3e139468406f845';
+  const company_id = companyDetail._id;
 
   const [deviceModal, setDeviceModal] = React.useState(true);
   const [success, setSuccess] = React.useState(false);
