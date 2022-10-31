@@ -18,8 +18,6 @@
    useColorScheme,
    View,
  } from 'react-native';
- import DeviceInfoOne from './screens/DeviceInfoOne';
- import DeviceInfoTwo from './screens/DeviceInfoTwo';
  
  import DeviceInfo from 'react-native-device-info';
  import NetInfo, {useNetInfo} from "@react-native-community/netinfo";
@@ -38,34 +36,37 @@
      const netData = useNetInfo();
  
      const getDeviceData = async () => {
-         const deviceJSON = {};
-         deviceJSON.deviceUniqueId = DeviceInfo.getUniqueId(); //get device unique id
-         setTimeout(() => {
-             // console.log(JSON.stringify(deviceJSON.deviceUniqueId._j)) // only unique id
-             console.log(JSON.stringify(deviceJSON))
-             console.log(netData);
-             // alert(JSON.stringify(deviceJSON))
-         }, 100);  
- 
-       getWiFiList();
- 
+        //  const deviceJSON = {};
+        //  deviceJSON.deviceUniqueId = await DeviceInfo.getUniqueId(); //get device unique id
+        //  setTimeout(() => {
+        //     //  console.log(JSON.stringify(deviceJSON.deviceUniqueId._j)) // only unique id
+        //     //console.log(JSON.stringify(deviceJSON))
+        //     //  console.log(netData);
+        //     //  alert(JSON.stringify(deviceJSON))
+        //   }, 100); 
+        //console.log("Device Json Data", deviceJSON);
+          getWiFiList();
      }
  
      const getWiFiList = async () => {
-         // let wifiList = await WifiManager.loadWifiList();
+        //  let wifiList = await WifiManager.loadWifiList();
+        //  console.log(wifiList);
          // setSsID(null);
          const re_scan_wifi_list = await WifiManager.reScanAndLoadWifiList();
- 
+        //  const get_ip = await WifiManager.getIP();
+        //  console.log("Get IP", get_ip);
          console.log('rescan wifi list', re_scan_wifi_list);
-         for (const list of re_scan_wifi_list) {
-             if (list.SSID === 'F17') {
-                 setSsID(list.SSID);
-                 console.log('inside loop ' + list.SSID);
-                 console.log(ssID);
-                 // alert("You are presented now")
-                 return false;
-             }
-         }
+        
+        //  for (const list of re_scan_wifi_list) {
+        //      if (list.SSID === 'F17') {
+        //          setSsID(list.SSID);
+        //          console.log('inside loop ' + list.SSID);
+        //          console.log(ssID);
+        //          // alert("You are presented now")
+        //          return false;
+        //      }
+        //  }
+
          // re_scan_wifi_list.forEach(list => {
          //     // list.SSID === 'SDD3' ? setSsID(list.SSID)  : console.log("null");
          //     if (list.SSID === 'F17') {
@@ -82,13 +83,11 @@
      //     getWiFiList()
      // }, 4000);
  
-     console.log("object")
- 
-     useEffect( () => {
-         setInterval(() => {
-             getWiFiList();
-         }, 2000);
-     },[]);
+    //  useEffect( () => {
+    //      setInterval(() => {
+    //          getWiFiList();
+    //      }, 4000);
+    //  },[]);
  
      // console.log(ssID);
      // const getNetInfo = () => {
@@ -97,41 +96,46 @@
      //   });
      // }
      
-     // useEffect( async () => {
-     //     //getDeviceData();
-     //     // getNetInfo();
-     //       const granted = await PermissionsAndroid.request(
-     //         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-     //         {
-     //           title: 'Location permission is required for WiFi connections',
-     //           message:
-     //             'This app needs location permission as this is required  ' +
-     //             'to scan for wifi networks.',
-     //           buttonNegative: 'DENY',
-     //           buttonPositive: 'ALLOW',
-     //         },
-     //       );
-     //       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-     //           // You can now use react-native-wifi-reborn
-     //           console.log('You can now use react-native-wifi-reborn');
-     //           // let wifiList = await WifiManager.loadWifiList(); //wifiList will be Array<WifiEntry>
-     //           // console.log('wifi list',wifiList);
-     //           // wifiList.forEach(list => {
-     //           //   console.log(list.SSID)
-     //           // });
-     //         } else {
-     //           // Permission denied
-     //           console.log('Permission denied');
-     //       }
- 
-     // },[]);
+     useEffect( () => {
+         async function allowPermission(){
+           const granted = await PermissionsAndroid.request(
+             PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+             {
+               title: 'Location permission is required for WiFi connections',
+               message:
+                 'This app needs location permission as this is required  ' +
+                 'to scan for wifi networks.',
+               buttonNegative: 'DENY',
+               buttonPositive: 'ALLOW',
+             },
+           );
+           if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+               // You can now use react-native-wifi-reborn
+               console.log('You can now use react-native-wifi-reborn');
+               // let wifiList = await WifiManager.loadWifiList(); //wifiList will be Array<WifiEntry>
+               // console.log('wifi list',wifiList);
+               // wifiList.forEach(list => {
+               //   console.log(list.SSID)
+               // });
+             } else {
+               // Permission denied
+               console.log('Permission denied');
+           }
+         }
+         allowPermission();
+
+        setInterval(() => {
+            // getDeviceData();
+            getWiFiList();
+        }, 5000);
+     },[]);
  
  
    return (
      <SafeAreaView style={styles.container}>
-         { activeTab === 'infoOne' ? <DeviceInfoOne title="Device Info One" /> : 
+         {/* { activeTab === 'infoOne' ? <DeviceInfoOne title="Device Info One" /> : 
              activeTab === 'infoTwo' ? <DeviceInfoTwo title="Device Info Two" /> :
-             null} 
+             null}  */}
          <View style={styles.tabBar}>
              <TouchableOpacity style={styles.tab} onPress={() => setActiveTab('infoOne')}>
                  <Text style={styles.tabText}>Info One </Text>
