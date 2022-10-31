@@ -1,19 +1,19 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text, TouchableOpacity, Image, Modal} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, Image, Modal } from 'react-native';
 import {
   FormInput,
   TextButton,
   ConfirmToast,
   HeaderBar,
 } from '../reuseableComponents';
-import {FONTS, SIZES, COLORS, icons, images} from '../constants';
-import {getDevice, postDevice} from './apiController/DeviceController';
-import {useSelector} from 'react-redux';
+import { FONTS, SIZES, COLORS, icons, images } from '../constants';
+import { getDevice, postDevice } from './apiController/DeviceController';
+import { useSelector } from 'react-redux';
 //===
 import WifiManager from 'react-native-wifi-reborn';
-import {PermissionsAndroid} from 'react-native';
+import { PermissionsAndroid } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import NetInfo, {useNetInfo} from '@react-native-community/netinfo';
+import NetInfo, { useNetInfo } from '@react-native-community/netinfo';
 
 const DeviceConfig = () => {
   // company data from redux
@@ -34,6 +34,7 @@ const DeviceConfig = () => {
   //
   const [wifiSsidList, setWifiSsidList] = useState([]);
   const [ssID, setSsID] = useState('');
+
 
   // post device data
   const PostDevice = async () => {
@@ -59,9 +60,14 @@ const DeviceConfig = () => {
   const fetchDevice = async () => {
     const response = await getDevice(company_id);
     console.log('dsfjh', response);
-    setSsID(response.device_ssid);
+    const data = response.data.map((ele) => {
+      // console.log("api ssid",ele.device_ssid);
+      setSsID(ele.device_ssid);
+    })
+    // getWiFiList();
   };
 
+  console.log(ssID)
   //======================
 
   const getWiFiList = async () => {
@@ -70,10 +76,11 @@ const DeviceConfig = () => {
 
     console.log('rescan wifi list', re_scan_wifi_list);
     for (const list of re_scan_wifi_list) {
+      // console.log("state ssid",ssID)
       if (list.SSID === ssID) {
         // setSsID(list.SSID);
-        console.log('SSID Matched' + list.SSID);
-        console.log(ssID);
+        console.log('SSID Matched ', list.SSID);
+        // console.log(ssID);
         return false;
       }
     }
@@ -106,12 +113,12 @@ const DeviceConfig = () => {
       }
     }
     allowPermission();
+    fetchDevice();
 
     setInterval(() => {
       getWiFiList();
-    }, 10000);
+    }, 8000);
 
-    fetchDevice();
   }, []);
   //==
 
@@ -138,7 +145,7 @@ const DeviceConfig = () => {
                 alignItems: 'center',
                 justifyContent: 'space-between',
               }}>
-              <Text style={{...FONTS.h6, color: COLORS.true_gray_600}}>
+              <Text style={{ ...FONTS.h6, color: COLORS.true_gray_600 }}>
                 Config New Device
               </Text>
               <TouchableOpacity
@@ -157,7 +164,7 @@ const DeviceConfig = () => {
                 />
               </TouchableOpacity>
             </View>
-            <View style={{marginTop: 20}}>
+            <View style={{ marginTop: 20 }}>
               <FormInput
                 placeholder={'Device name'}
                 icon={icons.device_config}
