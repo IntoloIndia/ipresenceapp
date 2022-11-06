@@ -14,6 +14,7 @@ const FloatingButton = ({onClickBtn}) => {
           backgroundColor: COLORS.green_700,
           padding: 15,
           borderRadius: 50,
+          elevation: 10,
         }}>
         <Image
           source={icons.plus}

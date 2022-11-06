@@ -24,11 +24,13 @@ export const COLORS = {
   yellow_400: '#facc15',
   yellow_500: '#eab308',
   yellow_600: '#ca8a04',
-  
+
   //amber
+  amber_200: '#fde68a',
+  amber_300: '#fcd34d',
+  amber_400: '#fbbf24',
   amber_500: '#f59e0b',
   amber_600: '#d97706',
-
 
   //true gray
   true_gray_50: '#fafafa',
@@ -79,6 +81,14 @@ export const COLORS = {
 
   lime: '#32CD32',
   emerald: '#50C878',
+
+  danger_400: '#fb7185',
+  warning_200: '#fed7aa',
+  warning_300: '#fdba74',
+
+  darkBlue_900: '#002851',
+  darkGreen_: '#002408',
+
 };
 
 export const SIZES = {

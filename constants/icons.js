@@ -36,6 +36,10 @@ const department = require('../assets/icons/department.png');
 const edit = require('../assets/icons/edit.png');
 const update = require('../assets/icons/update.png');
 const device_config = require('../assets/icons/device_config.png');
+const teamwork = require('../assets/icons/teamwork.png');
+const present = require('../assets/icons/present.png');
+const absent = require('../assets/icons/absent.png');
+const Inleave = require('../assets/icons/Inleave.png');
 
 //social icons
 const phone = require('../assets/icons/social_icons/phone.png');
@@ -90,6 +94,10 @@ export default {
   edit,
   update,
   device_config,
+  teamwork,
+  present,
+  absent,
+  Inleave,
   //social
   phone,
   email_circle,

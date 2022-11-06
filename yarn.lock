@@ -6025,7 +6025,7 @@
     "kleur" "^3.0.3"
     "sisteransi" "^1.0.5"
 
-"prop-types@*", "prop-types@^15.7.2", "prop-types@^15.8.1":
+"prop-types@*", "prop-types@^15.6.0", "prop-types@^15.7.2", "prop-types@^15.8.1":
   "integrity" "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg=="
   "resolved" "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz"
   "version" "15.8.1"
@@ -6142,6 +6142,11 @@
   "resolved" "https://registry.npmjs.org/react-native-dropdown-picker/-/react-native-dropdown-picker-5.4.2.tgz"
   "version" "5.4.2"
 
+"react-native-duo-toggle-switch@^1.1.0":
+  "integrity" "sha512-1K4O8W8Y3GrZ3M2wSDOoLpKdBUPIUWkBcAjE1xfh3H1TfeOjssyZKCNnD+Pdso7GCFxgcK0daBf1cdLHJak67w=="
+  "resolved" "https://registry.npmjs.org/react-native-duo-toggle-switch/-/react-native-duo-toggle-switch-1.1.0.tgz"
+  "version" "1.1.0"
+
 "react-native-find-local-devices@^1.3.5":
   "integrity" "sha512-Sn20FRulAvZbutNVv/lxb0kKzVvhAa2DaswEmRP/8XwjbLP4cKJ46apiFBnB+Dh0oSnaWRXllEjzuKCR0vJfaQ=="
   "resolved" "https://registry.npmjs.org/react-native-find-local-devices/-/react-native-find-local-devices-1.3.5.tgz"
@@ -6224,6 +6229,13 @@
     "css-select" "^5.1.0"
     "css-tree" "^1.1.3"
 
+"react-native-switch@^1.5.1":
+  "integrity" "sha512-nfuPrrPKzeZL1mQH0u1rlEGv9W1+okU/xOcNNaDNz/LhSdzWOZ04ogJ4iEj7Sth3hkBxv4XwFQZTgCc07we+cg=="
+  "resolved" "https://registry.npmjs.org/react-native-switch/-/react-native-switch-1.5.1.tgz"
+  "version" "1.5.1"
+  dependencies:
+    "prop-types" "^15.6.0"
+
 "react-native-tab-view@^3.3.0", "react-native-tab-view@>= 3.0.0":
   "integrity" "sha512-xjAQe657Gp/de2QHb7ptksTg8Jcb+j3fLAdcYryzfavt/pe+HtKLpkCtQsxyIJpRrAO7YPxFsymi2N4MnNfePA=="
   "resolved" "https://registry.npmjs.org/react-native-tab-view/-/react-native-tab-view-3.3.0.tgz"
@@ -6236,7 +6248,7 @@
   "resolved" "https://registry.npmjs.org/react-native-wifi-reborn/-/react-native-wifi-reborn-4.7.0.tgz"
   "version" "4.7.0"
 
-"react-native@*", "react-native@^0.0.0-0 || 0.60 - 0.70 || 1000.0.0", "react-native@>= 0.53.0", "react-native@>= 0.62", "react-native@>=0.13", "react-native@>=0.57", "react-native@>=0.59", "react-native@0.70.2":
+"react-native@*", "react-native@^0.0.0-0 || 0.60 - 0.70 || 1000.0.0", "react-native@>= 0.53.0", "react-native@>= 0.62", "react-native@>=0.13", "react-native@>=0.29", "react-native@>=0.57", "react-native@>=0.59", "react-native@0.70.2":
   "integrity" "sha512-c0Usl1Lc4pApDI66wpHwX8SGBUqXouQ8Z8Q9gX4jBjnmO5E8Vmlv6IM0CWDqbX/tn+aKNHCBLqV5phnCqusGbw=="
   "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.70.2.tgz"
   "version" "0.70.2"
@@ -6583,6 +6595,11 @@
   "version" "2.6.3"
   dependencies:
     "glob" "^7.1.3"
+
+"rn-toggle-switch@^1.0.2":
+  "integrity" "sha512-4zuyPdYU6nqinyTeaasUj2umHAoY8mCXe1l8AqmgDq3nkhOTcGxWPViF+Z83mfkDfqeqB0XSpYH8VuujFzvmgA=="
+  "resolved" "https://registry.npmjs.org/rn-toggle-switch/-/rn-toggle-switch-1.0.2.tgz"
+  "version" "1.0.2"
 
 "rsvp@^4.8.4":
   "integrity" "sha512-nfMOlASu9OnRJo1mbEk2cz0D56a1MBNrJ7orjRZQG10XDyuvwksKbuXNp6qa+kbn839HwjwhBzhFmdsaEAfauA=="
