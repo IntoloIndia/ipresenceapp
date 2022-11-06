@@ -148,7 +148,7 @@ const EmployeeDetails = ({route}) => {
         <Text style={{...FONTS.h6, color: COLORS.true_gray_800}}>
           Emloyee Attendance
         </Text>
-      </View>
+      </View>  
     );
   }
 
