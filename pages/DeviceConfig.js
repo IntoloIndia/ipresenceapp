@@ -31,9 +31,12 @@ const DeviceConfig = () => {
   const [deviceName, setDeviceName] = React.useState('');
   const [deviceSsid, setDeviceSsid] = React.useState('');
 
+
+  const [deviceData, setDeviceData] = React.useState([]);
+
   //
   const [wifiSsidList, setWifiSsidList] = useState([]);
-  const [ssID, setSsID] = useState('');
+  const [ssID, setSsID] = useState([]);
 
 
   // post device data
@@ -60,27 +63,23 @@ const DeviceConfig = () => {
   const fetchDevice = async () => {
     const response = await getDevice(company_id);
     console.log('dsfjh', response);
-    const data = response.data.map((ele) => {
-      // console.log("api ssid",ele.device_ssid);
-      setSsID(ele.device_ssid);
-    })
-    // getWiFiList();
+    setDeviceData(response.data);
   };
 
-  console.log(ssID)
   //======================
-
   const getWiFiList = async () => {
-    // setSsID(null);
     const re_scan_wifi_list = await WifiManager.reScanAndLoadWifiList();
-
     console.log('rescan wifi list', re_scan_wifi_list);
-    for (const list of re_scan_wifi_list) {
-      if (list.SSID === ssID) {
-        // setSsID(list.SSID);
-        console.log('SSID Matched ', list.SSID);
-        return false;
-      }
+    for (const wifi_list of re_scan_wifi_list) {
+      deviceData.map((ele) => {
+          // console.log("api ssid",ele.device_ssid);
+          console.log(ele.device_ssid)
+          if (wifi_list.SSID === ele.device_ssid) {
+            console.log('SSID Matched ', list.SSID);
+            return false;
+          }
+      })
+
     }
   };
 
