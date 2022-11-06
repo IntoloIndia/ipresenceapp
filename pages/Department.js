@@ -202,13 +202,13 @@ const CompanyDepartment = () => {
           alignItems: 'center',
         }}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Text style={{...FONTS.h3, color: COLORS.true_gray_600}}>
+          <Text style={{...FONTS.h4, color: COLORS.true_gray_700}}>
             {index + 1}.
           </Text>
           <Text
             style={{
-              ...FONTS.h3,
-              color: COLORS.true_gray_600,
+              ...FONTS.h4,
+              color: COLORS.true_gray_700,
               textTransform: 'capitalize',
               left: 5,
             }}>
@@ -218,11 +218,30 @@ const CompanyDepartment = () => {
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <TouchableOpacity
             onPress={() => getDepartmentData(item._id, item.department)}
-            style={{right: 10}}>
-            <Image source={icons.edit} style={{height: 15, width: 15}} />
+            style={{
+              right: 15,
+              backgroundColor: COLORS.green_600,
+              padding: 6,
+              borderRadius: 5,
+              elevation: 10,
+            }}>
+            <Image
+              source={icons.edit}
+              style={{height: 12, width: 12, tintColor: COLORS.white}}
+            />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => DeleteDepartment(item._id)}>
-            <Image source={icons.delete_} style={{height: 15, width: 15}} />
+          <TouchableOpacity
+            onPress={() => DeleteDepartment(item._id)}
+            style={{
+              backgroundColor: COLORS.error,
+              padding: 6,
+              borderRadius: 5,
+              elevation: 10,
+            }}>
+            <Image
+              source={icons.delete_}
+              style={{height: 12, width: 12, tintColor: COLORS.white}}
+            />
           </TouchableOpacity>
         </View>
       </View>
@@ -230,7 +249,7 @@ const CompanyDepartment = () => {
 
     return (
       <FlatList
-        contentContainerStyle={{paddingHorizontal: 20}}
+        contentContainerStyle={{padding: 20, paddingBottom: 100}}
         data={departmentData}
         keyExtractor={item => `${item._id}`}
         renderItem={renderItem}

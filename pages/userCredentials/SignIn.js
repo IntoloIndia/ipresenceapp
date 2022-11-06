@@ -18,6 +18,7 @@ import {COLORS, FONTS, icons, images} from '../../constants';
 import {companyLogin} from '../../services/companyAuthApi';
 import {userLogin} from '../../services/employeeAuthApi';
 import {useDispatch} from 'react-redux';
+import DuoToggleSwitch from 'react-native-duo-toggle-switch';
 
 const {width} = Dimensions.get('window');
 
@@ -204,7 +205,7 @@ const SignIn = ({navigation}) => {
                 marginBottom: 50,
               }}>
               <Image source={images.logo} style={{height: 90, width: 280}} />
-              <Text
+              {/* <Text
                 style={{
                   fontSize: 30,
                   fontWeight: 'bold',
@@ -215,7 +216,7 @@ const SignIn = ({navigation}) => {
               </Text>
               <Text style={{...FONTS.h4, color: COLORS.darkGray}}>
                 Sign in to continue
-              </Text>
+              </Text> */}
             </View>
 
             <View
@@ -226,6 +227,7 @@ const SignIn = ({navigation}) => {
                 borderRadius: 10,
                 padding: 20,
                 paddingVertical: 30,
+                // alignItems: 'center',
               }}>
               <TouchableOpacity
                 style={{
@@ -251,11 +253,11 @@ const SignIn = ({navigation}) => {
                 )}
                 <Text
                   style={{
-                    ...FONTS.h4,
+                    ...FONTS.h5,
                     color: COLORS.white,
                     backgroundColor: COLORS.green_700,
-                    paddingHorizontal: 8,
-                    paddingVertical: 1,
+                    paddingHorizontal: 12,
+                    paddingVertical: 3,
                     borderRadius: 2,
                   }}>
                   {loginPreference == true ? 'Team Login' : 'Company Login'}
@@ -272,6 +274,31 @@ const SignIn = ({navigation}) => {
                   />
                 )}
               </TouchableOpacity>
+
+              {/* <DuoToggleSwitch
+                style={{
+                  maxHeight: 30,
+                  maxWidth: 200,
+                  justifyContent: 'center',
+                  alignSelf: 'center',
+                }}
+                primaryText="User"
+                secondaryText="Company"
+                onPrimaryPress={() => setLoginPreference(false)}
+                onSecondaryPress={() => setLoginPreference(true)}
+                activeColor={COLORS.green_700}
+                inactiveColor={COLORS.true_gray_200}
+                primaryButtonStyle={{
+                  maxHeight: 30,
+                  maxWidth: 100,
+                }}
+                secondaryButtonStyle={{
+                  maxHeight: 30,
+                  maxWidth: 100,
+                }}
+                primaryTextStyle={{borderRadius: null}}
+              /> */}
+
               <View style={{marginTop: 40}}>
                 {loginPreference == true
                   ? renderCompanySignIn()

@@ -180,7 +180,18 @@ const CompanyDesignation = () => {
 
   function renderDesignation() {
     const renderItem = ({item, index}) => (
-      <View>
+      <View
+        style={{
+          backgroundColor:
+            index % 2
+              ? COLORS.warning_200
+              : index % 3
+              ? COLORS.amber_200
+              : COLORS.green_200,
+          padding: 15,
+          borderRadius: 5,
+          elevation: 5,
+        }}>
         <View
           key={item._id}
           style={{flexDirection: 'row', alignItems: 'center', marginBottom: 5}}>
@@ -190,20 +201,31 @@ const CompanyDesignation = () => {
           <Text
             style={{
               ...FONTS.h5,
-              color: COLORS.true_gray_800,
+              color: COLORS.true_gray_700,
               textTransform: 'capitalize',
               left: 5,
+              fontWeight: 'bold',
             }}>
             {item.department}
           </Text>
         </View>
         {item.designationList.map((ele, i) => {
           return (
-            <View key={i} style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View
+              key={i}
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginVertical: 5,
+                borderWidth: 1,
+                borderColor: COLORS.darkGray2,
+                padding: 5,
+                backgroundColor: COLORS.true_gray_50,
+              }}>
               <Text
                 style={{
-                  ...FONTS.h3,
-                  color: COLORS.true_gray_800,
+                  ...FONTS.h4,
+                  color: COLORS.true_gray_700,
                   textTransform: 'capitalize',
                   left: 15,
                 }}>
@@ -211,8 +233,8 @@ const CompanyDesignation = () => {
               </Text>
               <Text
                 style={{
-                  ...FONTS.h3,
-                  color: COLORS.true_gray_800,
+                  ...FONTS.h4,
+                  color: COLORS.true_gray_700,
                   textTransform: 'capitalize',
                   left: 20,
                 }}>
@@ -226,7 +248,7 @@ const CompanyDesignation = () => {
 
     return (
       <FlatList
-        contentContainerStyle={{paddingHorizontal: 20}}
+        contentContainerStyle={{padding: 20, paddingBottom: 100}}
         data={designationData}
         keyExtractor={item => `${item.department_id}`}
         renderItem={renderItem}
@@ -236,9 +258,9 @@ const CompanyDesignation = () => {
           return (
             <View
               style={{
-                height: 1,
-                backgroundColor: COLORS.true_gray_300,
-                marginVertical: 15,
+                // height: 1,
+                // backgroundColor: COLORS.true_gray_300,
+                marginVertical: 10,
               }}></View>
           );
         }}
