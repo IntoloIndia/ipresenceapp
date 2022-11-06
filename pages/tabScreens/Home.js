@@ -41,19 +41,16 @@ const Home = ({navigation}) => {
     {
       id: 1,
       name: 'present',
-      img: require('../../assets/icons/present.png'),
       qty: 430,
     },
     {
       id: 2,
       name: 'absent',
-      img: require('../../assets/icons/absent.png'),
       qty: 30,
     },
     {
       id: 3,
       name: 'in leave',
-      img: require('../../assets/icons/Inleave.png'),
       qty: 50,
     },
   ];
@@ -94,17 +91,17 @@ const Home = ({navigation}) => {
       <TouchableOpacity
         style={{
           paddingVertical: SIZES.base,
-          paddingHorizontal: SIZES.radius,
+          paddingHorizontal: SIZES.radius * 1.5,
           marginLeft: index == 0 ? SIZES.radius : 0,
           marginRight: SIZES.radius,
           borderRadius: 10,
           backgroundColor: COLORS.white,
         }}>
         <View style={{flexDirection: 'row'}}>
-          <View>
+          {/* <View>
             <ImageBackground
               style={{
-                backgroundColor: COLORS.green_200,
+                backgroundColor: COLORS.warning_600,
                 padding: 6,
                 borderRadius: 50,
                 elevation: 5,
@@ -115,24 +112,24 @@ const Home = ({navigation}) => {
                 style={{
                   height: 18,
                   width: 18,
-                  tintColor: COLORS.blue,
+                  tintColor: COLORS.white,
                 }}
               />
             </ImageBackground>
-          </View>
-          <View style={{marginLeft: SIZES.base}}>
+          </View> */}
+          <View style={{alignItems: 'center'}}>
             <Text
               style={{
                 fontSize: 20,
                 textTransform: 'capitalize',
-                color: COLORS.true_gray_700,
+                color: COLORS.true_gray_600,
               }}>
               {item.name}
             </Text>
             <Text
               style={{
-                fontSize: 22,
-                color: COLORS.true_gray_600,
+                fontSize: 20,
+                color: COLORS.true_gray_700,
                 fontWeight: 'bold',
               }}>
               {item.qty}
@@ -146,7 +143,7 @@ const Home = ({navigation}) => {
       <View
         style={{
           width: '100%',
-          height: 215,
+          height: 200,
         }}>
         <ImageBackground
           source={images.banner_04}
@@ -155,7 +152,7 @@ const Home = ({navigation}) => {
             flex: 1,
             alignItems: 'center',
           }}>
-          <View
+          {/* <View
             style={{
               // marginTop: SIZES.radius,
               width: '100%',
@@ -171,8 +168,13 @@ const Home = ({navigation}) => {
               }}>
               <Text></Text>
             </TouchableOpacity>
-          </View>
-          <View style={{alignItems: 'center', justifyContent: 'center'}}>
+          </View> */}
+          <View
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginTop: 20,
+            }}>
             <Text style={{fontSize: 40, color: COLORS.white}}>
               {companyDetail.company_name}
             </Text>
@@ -195,7 +197,7 @@ const Home = ({navigation}) => {
               </Text>
             </View>
           </View>
-          <View style={{position: 'absolute', bottom: '-15%'}}>
+          <View style={{position: 'absolute', bottom: '-18%'}}>
             <Text
               style={{
                 marginLeft: SIZES.radius,
@@ -227,7 +229,7 @@ const Home = ({navigation}) => {
           <Text
             style={{
               ...FONTS.h4,
-              color: COLORS.true_gray_700,
+              color: COLORS.true_gray_900,
             }}>
             {item.department} ({item.employee_count})
           </Text>
@@ -246,8 +248,8 @@ const Home = ({navigation}) => {
                 key={i}
                 style={{
                   backgroundColor: COLORS.amber_400,
-                  paddingHorizontal: 10,
-                  paddingVertical: 5,
+                  paddingHorizontal: 8,
+                  paddingVertical: 4,
                   marginLeft: i === 0 ? 0 : 10,
                   marginBottom: 5,
                   borderRadius: 3,
@@ -267,7 +269,7 @@ const Home = ({navigation}) => {
                 }>
                 <Text
                   style={{
-                    fontSize: 15,
+                    fontSize: 14,
                     color: COLORS.true_gray_700,
                     textTransform: 'uppercase',
                   }}>
@@ -295,7 +297,7 @@ const Home = ({navigation}) => {
       <FlatList
         contentContainerStyle={{
           margin: 20,
-          marginTop: 70,
+          marginTop: 60,
         }}
         data={employee}
         keyExtractor={item => `${item._id}`}

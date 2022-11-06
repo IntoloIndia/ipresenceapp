@@ -71,7 +71,7 @@ const More = ({navigation}) => {
       </TouchableOpacity>
     );
 
-    const HeaderComponent = () => <View>{/* {renderCompanyProfile()} */}</View>;
+    const HeaderComponent = () => <View>{renderCompanyProfile()}</View>;
     return (
       <FlatList
         contentContainerStyle={{
