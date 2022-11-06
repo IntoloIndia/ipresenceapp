@@ -10,7 +10,7 @@ const HeaderBar = ({title, titleColor, arrowColor}) => {
       style={{
         flexDirection: 'row',
         paddingHorizontal: SIZES.radius,
-        paddingVertical: SIZES.padding,
+        paddingTop: SIZES.padding,
       }}>
       <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
         <TouchableOpacity
@@ -26,6 +26,7 @@ const HeaderBar = ({title, titleColor, arrowColor}) => {
             marginLeft: SIZES.radius,
             ...FONTS.h5,
             color: titleColor,
+            textTransform: 'capitalize',
           }}>
           {title}
         </Text>

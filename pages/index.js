@@ -1,11 +1,6 @@
-import CompanyTeamRegister from './CompanyTeamRegister';
-import CompanyDepartment from './CompanyDepartment';
-import CompanyDesignation from './CompanyDesignation';
+import AddEmployee from './AddEmployee';
+import Department from './Department';
+import Designation from './Designation';
 import DeviceConfig from './DeviceConfig';
 
-export {
-  CompanyTeamRegister,
-  CompanyDepartment,
-  CompanyDesignation,
-  DeviceConfig,
-};
+export {AddEmployee, Department, Designation, DeviceConfig};

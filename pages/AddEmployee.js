@@ -39,6 +39,8 @@ const CompanyTeamRegister = () => {
   const [userName, setUsername] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [mobile, setMobile] = React.useState('');
+  const [empCode, setEmpCode] = React.useState('');
+  console.log(empCode);
   //Department Dropdown
   const [openDep, setOpenDep] = useState(false);
   const [depValue, setDepValue] = useState(null);
@@ -68,6 +70,7 @@ const CompanyTeamRegister = () => {
       employee_name: userName,
       employee_email: email,
       employee_mobile: mobile,
+      employee_code: empCode,
     };
     const response = await employeeRegistration(userData);
     if (response.status === 200) {
@@ -78,6 +81,7 @@ const CompanyTeamRegister = () => {
       setUsername('');
       setEmail('');
       setMobile('');
+      setEmpCode('');
       fetchEmployee();
     } else {
       setWarnMessage(response.message);
@@ -135,6 +139,7 @@ const CompanyTeamRegister = () => {
           }}>
           <View
             style={{
+              top:20,
               width: '90%',
               backgroundColor: COLORS.white3,
               padding: 20,
@@ -166,7 +171,7 @@ const CompanyTeamRegister = () => {
                 />
               </TouchableOpacity>
             </View>
-            <View style={{marginTop: 20}}>
+            <View style={{marginTop: 10}}>
               {/* <Text style={{...FONTS.h3, color: COLORS.true_gray_600}}>
                 User Name
               </Text> */}
@@ -200,6 +205,11 @@ const CompanyTeamRegister = () => {
                 onOpen={onOpenDes}
               />
               <FormInput
+                placeholder={'Employee Code'}
+                icon={icons.name}
+                onChange={text => setEmpCode(text)}
+              />
+              <FormInput
                 placeholder={'Name'}
                 icon={icons.name}
                 onChange={text => setUsername(text)}
@@ -224,7 +234,7 @@ const CompanyTeamRegister = () => {
               <TextButton
                 label="Submit"
                 buttonContainerStyle={{
-                  marginTop: 20,
+                  marginTop: 10,
                   height: 40,
                   alignItems: 'center',
                   borderRadius: 5,
@@ -240,7 +250,18 @@ const CompanyTeamRegister = () => {
 
   function renderUsers() {
     const renderItem = ({item, index}) => (
-      <View>
+      <View
+        style={{
+          backgroundColor:
+            index % 2
+              ? COLORS.warning_200
+              : index % 3
+              ? COLORS.amber_200
+              : COLORS.green_200,
+          padding: 15,
+          borderRadius: 5,
+          elevation: 5,
+        }}>
         <View
           key={item._id}
           style={{flexDirection: 'row', alignItems: 'center', marginBottom: 5}}>
@@ -250,26 +271,39 @@ const CompanyTeamRegister = () => {
           <Text
             style={{
               ...FONTS.h5,
-              color: COLORS.true_gray_800,
+              color: COLORS.true_gray_700,
               textTransform: 'capitalize',
               left: 5,
+              fontWeight: 'bold',
             }}>
             {item.department}
           </Text>
         </View>
         {item.employeeList.map((ele, i) => {
           return (
-            <View key={i}>
+            <View
+              key={i}
+              style={{
+                // borderTopWidth: i == 0 ? null : 1,
+                // marginVertical: 5,
+                // borderColor: COLORS.true_gray_400,
+                // borderRadius:5,
+                marginVertical: 5,
+                borderWidth: 1,
+                borderColor: COLORS.darkGray2,
+                padding: 5,
+                backgroundColor: COLORS.true_gray_50,
+              }}>
               <View
                 style={{
                   flexDirection: 'row',
                   alignItems: 'center',
-                  marginTop: i == 0 ? null : 10,
+                  // marginTop: i == 0 ? null : 10,
                 }}>
                 <Text
                   style={{
-                    ...FONTS.h3,
-                    color: COLORS.true_gray_800,
+                    ...FONTS.h4,
+                    color: COLORS.true_gray_700,
                     textTransform: 'capitalize',
                     left: 15,
                   }}>
@@ -277,8 +311,8 @@ const CompanyTeamRegister = () => {
                 </Text>
                 <Text
                   style={{
-                    ...FONTS.h3,
-                    color: COLORS.true_gray_800,
+                    ...FONTS.h4,
+                    color: COLORS.true_gray_700,
                     textTransform: 'capitalize',
                     left: 20,
                   }}>
@@ -290,10 +324,9 @@ const CompanyTeamRegister = () => {
                 <Image source={icons.call} style={{height: 15, width: 15}} />
                 <Text
                   style={{
-                    ...FONTS.h3,
-                    color: COLORS.true_gray_800,
-                    textTransform: 'capitalize',
-                    left: 5,
+                    ...FONTS.h4,
+                    color: COLORS.true_gray_700,
+                    left: 10,
                   }}>
                   {ele.employee_mobile}
                 </Text>
@@ -303,10 +336,9 @@ const CompanyTeamRegister = () => {
                 <Image source={icons.email} style={{height: 15, width: 15}} />
                 <Text
                   style={{
-                    ...FONTS.h3,
-                    color: COLORS.true_gray_800,
-                    textTransform: 'capitalize',
-                    left: 5,
+                    ...FONTS.h4,
+                    color: COLORS.true_gray_700,
+                    left: 10,
                   }}>
                   {ele.employee_email}
                 </Text>
@@ -319,7 +351,7 @@ const CompanyTeamRegister = () => {
 
     return (
       <FlatList
-        contentContainerStyle={{paddingHorizontal: 20}}
+        contentContainerStyle={{padding: 20, paddingBottom: 100}}
         data={users}
         keyExtractor={item => `${item._id}`}
         renderItem={renderItem}
@@ -329,9 +361,9 @@ const CompanyTeamRegister = () => {
           return (
             <View
               style={{
-                height: 1,
-                backgroundColor: COLORS.true_gray_400,
-                marginVertical: 15,
+                // height: 1,
+                // backgroundColor: COLORS.true_gray_400,
+                marginVertical: 10,
               }}></View>
           );
         }}
