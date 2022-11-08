@@ -13,6 +13,7 @@ import store from './src/app/store';
 import {Provider} from 'react-redux';
 import {DeviceConfig, AddEmployee, Department, Designation} from './pages';
 import EmployeeDetails from './pages/EmployeeDetails';
+import Animations from './pages/Animations';
 
 const Stack = createStackNavigator();
 
@@ -34,6 +35,7 @@ const App = () => {
           <Stack.Screen name="Designation" component={Designation} />
           <Stack.Screen name="DeviceConfig" component={DeviceConfig} />
           <Stack.Screen name="EmployeeDetails" component={EmployeeDetails} />
+          <Stack.Screen name="Animations" component={Animations} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

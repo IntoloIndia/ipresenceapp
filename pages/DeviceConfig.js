@@ -39,7 +39,7 @@ const DeviceConfig = () => {
   // states
   const [deviceName, setDeviceName] = React.useState('');
   const [deviceSsid, setDeviceSsid] = React.useState('');
-  const [devices, setDevices] = React.useState('');
+  const [devices, setDevices] = React.useState([]);
 
   //
   const [wifiSsidList, setWifiSsidList] = useState([]);
@@ -56,6 +56,7 @@ const DeviceConfig = () => {
     if (response.status === 200) {
       setSuccess(true);
       setDeviceModal(false);
+      fetchDevice();
     } else {
       setWarnMessage(response.message);
       setWarn(true);
@@ -65,28 +66,32 @@ const DeviceConfig = () => {
     }, 2000);
   };
 
-  const arr1 = [];
-  const arr2 = [];
-
-  console.log('1', arr1);
-  console.log('2', arr2);
-
-  let newSsid;
   // get department
   const fetchDevice = async () => {
     const response = await getDevice(company_id);
+    console.log(response);
     setDevices(response.data);
-    const data = response.data.map(ele => {
-      newSsid = ele.device_ssid;
-      arr1.push(ele.device_ssid);
-    });
   };
   //======================
 
+  //========================================================
+
+  const getDifference = (wifiSsidList, devices) => {
+    return wifiSsidList.filter(object1 => {
+      return devices.some(object2 => {
+        if (object1.SSID === object2.device_ssid) {
+          console.log('SSID MATCHEd', object1.SSID);
+        }
+      });
+    });
+  };
+
+  console.log(getDifference(wifiSsidList, devices));
+  //========================================================
+
   const getWiFiList = async () => {
-    // setSsID(null);
     const re_scan_wifi_list = await WifiManager.reScanAndLoadWifiList();
-    console.log(re_scan_wifi_list);
+    setWifiSsidList(re_scan_wifi_list);
 
     // for (const list of re_scan_wifi_list) {
     //   console.log('state ssid', newSsid);
@@ -98,13 +103,12 @@ const DeviceConfig = () => {
     //   }
     // }
 
-    re_scan_wifi_list.map((ele, i) => {
-      arr2.push(ele.SSID);
-      setWifiSsid(ele.SSID);
-      ele.SSID === newSsid
-        ? console.log('Mached SSID', ele.SSID)
-        : console.log('Not Matched');
-    });
+    // re_scan_wifi_list.map((ele, i) => {
+    //   setWifiSsid(ele.SSID);
+    //   ele.SSID === newSsid
+    //     ? console.log('Mached SSID', ele.SSID)
+    //     : console.log('Not Matched');
+    // });
   };
 
   async function allowPermission() {
@@ -139,7 +143,7 @@ const DeviceConfig = () => {
 
     setInterval(() => {
       getWiFiList();
-    }, 5000);
+    }, 1000);
   }, []);
 
   //==
@@ -157,7 +161,7 @@ const DeviceConfig = () => {
           <View
             style={{
               width: '90%',
-              backgroundColor: COLORS.white3,
+              backgroundColor: COLORS.green_50,
               padding: 20,
               borderRadius: 10,
             }}>

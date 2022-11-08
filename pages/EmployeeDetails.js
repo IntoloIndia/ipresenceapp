@@ -46,7 +46,7 @@ const EmployeeDetails = ({route}) => {
                   color: COLORS.true_gray_600,
                   backgroundColor: COLORS.amber_300,
                   paddingHorizontal: 5,
-                  left: 5,
+                  left: 5,textTransform:'uppercase'
                 }}>
                 {Emp_details.employee_code}
               </Text>

@@ -141,7 +141,7 @@ const CompanyTeamRegister = () => {
             style={{
               top:20,
               width: '90%',
-              backgroundColor: COLORS.white3,
+              backgroundColor: COLORS.green_50,
               padding: 20,
               borderRadius: 10,
             }}>

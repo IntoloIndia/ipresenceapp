@@ -76,6 +76,7 @@ const Home = ({navigation}) => {
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     fetchEmployee();
+    fetchEmployeeCount();
     wait(1000).then(() => setRefreshing(false));
   }, []);
 
@@ -91,7 +92,7 @@ const Home = ({navigation}) => {
       <TouchableOpacity
         style={{
           paddingVertical: SIZES.base,
-          paddingHorizontal: SIZES.radius * 1.5,
+          paddingHorizontal: SIZES.radius,
           marginLeft: index == 0 ? SIZES.radius : 0,
           marginRight: SIZES.radius,
           borderRadius: 10,
@@ -175,7 +176,8 @@ const Home = ({navigation}) => {
               justifyContent: 'center',
               marginTop: 20,
             }}>
-            <Text style={{fontSize: 40, color: COLORS.white}}>
+            <Text
+              style={{fontSize: 40, color: COLORS.white, fontWeight: '500'}}>
               {companyDetail.company_name}
             </Text>
             <Text style={{...FONTS.h4, color: COLORS.white}}>
@@ -230,6 +232,7 @@ const Home = ({navigation}) => {
             style={{
               ...FONTS.h4,
               color: COLORS.true_gray_900,
+              textTransform: 'capitalize',
             }}>
             {item.department} ({item.employee_count})
           </Text>
@@ -326,7 +329,8 @@ const Home = ({navigation}) => {
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
       showsVerticalScrollIndicator={false}>
-      <View style={{flex: 1, paddingBottom: 130}}>
+      <View
+        style={{flex: 1, paddingBottom: 200, backgroundColor: COLORS.green_50}}>
         {renderHeader()}
         {renderEmployee()}
       </View>
