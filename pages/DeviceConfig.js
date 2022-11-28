@@ -69,7 +69,7 @@ const DeviceConfig = () => {
   // get department
   const fetchDevice = async () => {
     const response = await getDevice(company_id);
-    console.log(response);
+    // console.log(response);
     setDevices(response.data);
   };
   //======================
@@ -81,6 +81,7 @@ const DeviceConfig = () => {
       return devices.some(object2 => {
         if (object1.SSID === object2.device_ssid) {
           console.log('SSID MATCHEd', object1.SSID);
+          // alert('SSID MATCHEd', object1.SSID);
         }
       });
     });
@@ -92,6 +93,7 @@ const DeviceConfig = () => {
   const getWiFiList = async () => {
     const re_scan_wifi_list = await WifiManager.reScanAndLoadWifiList();
     setWifiSsidList(re_scan_wifi_list);
+    console.log('wifilist', re_scan_wifi_list);
 
     // for (const list of re_scan_wifi_list) {
     //   console.log('state ssid', newSsid);
@@ -143,10 +145,8 @@ const DeviceConfig = () => {
 
     setInterval(() => {
       getWiFiList();
-    }, 1000);
+    }, 3000);
   }, []);
-
-  //==
 
   function renderDeviceModal() {
     return (

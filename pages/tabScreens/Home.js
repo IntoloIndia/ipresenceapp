@@ -16,6 +16,9 @@ import {
   getEmployeeCount,
 } from '../apiController/EmployeeController';
 import {useSelector} from 'react-redux';
+import {getDevice, postDevice} from '../apiController/DeviceController';
+import WifiManager from 'react-native-wifi-reborn';
+import {PermissionsAndroid} from 'react-native';
 
 const wait = timeout => {
   return new Promise(resolve => setTimeout(resolve, timeout));
@@ -54,6 +57,7 @@ const Home = ({navigation}) => {
       qty: 50,
     },
   ];
+
   const [todayStatus, setTodayStatus] = React.useState(data);
 
   // get department
@@ -85,6 +89,86 @@ const Home = ({navigation}) => {
     fetchEmployeeCount();
   }, []);
 
+  //==========================================================
+  const [devices, setDevices] = React.useState([]);
+  const [wifiSsidList, setWifiSsidList] = React.useState([]);
+
+  const fetchDevice = async () => {
+    const response = await getDevice(company_id);
+    // console.log(response);
+    setDevices(response.data);
+  };
+
+  const getDifference = (wifiSsidList, devices) => {
+    return wifiSsidList.filter(object1 => {
+      return devices.some(object2 => {
+        if (object1.SSID === object2.device_ssid) {
+          console.log('SSID MATCHEd', object1.SSID);
+          // alert('SSID MATCHEd', object1.SSID);
+        }
+      });
+    });
+  };
+
+  console.log(getDifference(wifiSsidList, devices));
+
+  const getWiFiList = async () => {
+    const re_scan_wifi_list = await WifiManager.reScanAndLoadWifiList();
+    setWifiSsidList(re_scan_wifi_list);
+    console.log('wifilist', re_scan_wifi_list);
+
+    // for (const list of re_scan_wifi_list) {
+    //   console.log('state ssid', newSsid);
+    //   if (list.SSID === newSsid) {
+    //     // setSsID(list.SSID);
+    //     console.log('SSID Matched ', list.SSID);
+    //     // console.log(ssID);
+    //     return false;
+    //   }
+    // }
+
+    // re_scan_wifi_list.map((ele, i) => {
+    //   setWifiSsid(ele.SSID);
+    //   ele.SSID === newSsid
+    //     ? console.log('Mached SSID', ele.SSID)
+    //     : console.log('Not Matched');
+    // });
+  };
+
+  async function allowPermission() {
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+      {
+        title: 'Location permission is required for WiFi connections',
+        message:
+          'This app needs location permission as this is required  ' +
+          'to scan for wifi networks.',
+        buttonNegative: 'DENY',
+        buttonPositive: 'ALLOW',
+      },
+    );
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      // You can now use react-native-wifi-reborn
+      console.log('You can now use react-native-wifi-reborn');
+      // let wifiList = await WifiManager.loadWifiList(); //wifiList will be Array<WifiEntry>
+      // console.log('wifi list',wifiList);
+      // wifiList.forEach(list => {
+      //   console.log(list.SSID)
+      // });
+    } else {
+      // Permission denied
+      console.log('Permission denied');
+    }
+  }
+
+  React.useEffect(() => {
+    allowPermission();
+    fetchDevice();
+
+    setInterval(() => {
+      getWiFiList();
+    }, 8000);
+  }, []);
   //==========================================================
 
   function renderHeader() {
