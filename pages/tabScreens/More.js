@@ -18,7 +18,8 @@ const More = ({navigation}) => {
     {id: 2, img: icons.department, name: 'Add Department'},
     {id: 3, img: icons.designation, name: 'Add Designation'},
     {id: 4, img: icons.device_config, name: 'Device Configuration'},
-    {id: 5, img: icons.login, name: 'Logout'},
+    {id: 5, img: icons.office_time, name: 'Office Timings'},
+    {id: 6, img: icons.login, name: 'Logout'},
   ];
   const [lists, setLists] = React.useState(tabLists);
 
@@ -42,6 +43,8 @@ const More = ({navigation}) => {
             : item.id === 4
             ? navigation.navigate('DeviceConfig')
             : item.id === 5
+            ? navigation.navigate('CompanyTiming')
+            : item.id === 6
             ? alert('Logout')
             : null
         }>
@@ -62,7 +65,7 @@ const More = ({navigation}) => {
             {item.name}
           </Text>
         </View>
-        {item.id != 5 && (
+        {item.id != 6 && (
           <Image
             source={icons.right_arr1}
             style={{height: 18, width: 18, tintColor: COLORS.black}}
@@ -71,7 +74,7 @@ const More = ({navigation}) => {
       </TouchableOpacity>
     );
 
-    const HeaderComponent = () => <View>{/* {renderCompanyProfile()} */}</View>;
+    const HeaderComponent = () => <View>{renderCompanyProfile()}</View>;
     return (
       <FlatList
         contentContainerStyle={{

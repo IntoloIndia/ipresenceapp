@@ -1,6 +1,9 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
+import store from './src/app/store';
+import {Provider} from 'react-redux';
+import {CompanyTabs, EmployeeTabs} from './navigation';
 import {
   ForgotPassword,
   Payment,
@@ -8,11 +11,14 @@ import {
   SignUp,
   VerifyProductKey,
 } from './pages/userCredentials';
-import Tabs from './navigation/Tabs';
-import store from './src/app/store';
-import {Provider} from 'react-redux';
-import {DeviceConfig, AddEmployee, Department, Designation} from './pages';
-import EmployeeDetails from './pages/EmployeeDetails';
+import {
+  DeviceConfig,
+  AddEmployee,
+  Department,
+  Designation,
+  EmployeeDetails,
+  CompanyTiming,
+} from './pages/companyScreens';
 
 const Stack = createStackNavigator();
 
@@ -28,12 +34,14 @@ const App = () => {
           <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
           <Stack.Screen name="VerifyProductKey" component={VerifyProductKey} />
           <Stack.Screen name="Payment" component={Payment} />
-          <Stack.Screen name="Tabs" component={Tabs} />
+          <Stack.Screen name="CompanyTabs" component={CompanyTabs} />
+          <Stack.Screen name="EmployeeTabs" component={EmployeeTabs} />
           <Stack.Screen name="Department" component={Department} />
           <Stack.Screen name="AddEmployee" component={AddEmployee} />
           <Stack.Screen name="Designation" component={Designation} />
           <Stack.Screen name="DeviceConfig" component={DeviceConfig} />
           <Stack.Screen name="EmployeeDetails" component={EmployeeDetails} />
+          <Stack.Screen name="CompanyTiming" component={CompanyTiming} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

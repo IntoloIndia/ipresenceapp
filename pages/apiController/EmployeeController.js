@@ -62,4 +62,64 @@ const logoutEmployee = async formData => {
   }
 };
 
-export {employeeRegistration, getEmployee, getEmployeeCount, logoutEmployee};
+const postEmployeeInTimeAttendance = async formData => {
+  try {
+    const res = await fetch(API_URL + 'employee-in-time-attendance', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const postEmployeeOutTimeAttendance = async formData => {
+  try {
+    const res = await fetch(API_URL + 'employee-out-time-attendance', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getEmployeeAttendance = async (comapany_id, year, month, user_id) => {
+  try {
+    const res = await fetch(
+      API_URL +
+        'employee-attendance/' +
+        `${comapany_id}/${year}/${month}/${user_id}`,
+      {
+        method: 'get',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export {
+  employeeRegistration,
+  getEmployee,
+  getEmployeeCount,
+  logoutEmployee,
+  postEmployeeInTimeAttendance,
+  postEmployeeOutTimeAttendance,
+  getEmployeeAttendance,
+};

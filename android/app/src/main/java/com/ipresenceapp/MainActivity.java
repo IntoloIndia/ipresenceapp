@@ -3,6 +3,7 @@ package com.ipresenceapp;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
+import com.reactlibrary.rnwifi.RNWifiPackage;
 
 public class MainActivity extends ReactActivity {
 

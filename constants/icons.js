@@ -40,6 +40,9 @@ const teamwork = require('../assets/icons/teamwork.png');
 const present = require('../assets/icons/present.png');
 const absent = require('../assets/icons/absent.png');
 const Inleave = require('../assets/icons/Inleave.png');
+const office_time = require('../assets/icons/office_time.png');
+const office_s_time = require('../assets/icons/office_s_time.png');
+const lunch_time = require('../assets/icons/lunch_time.png');
 
 //social icons
 const phone = require('../assets/icons/social_icons/phone.png');
@@ -98,6 +101,9 @@ export default {
   present,
   absent,
   Inleave,
+  office_time,
+  office_s_time,
+  lunch_time,
   //social
   phone,
   email_circle,

@@ -85,10 +85,12 @@ export const COLORS = {
   danger_400: '#fb7185',
   warning_200: '#fed7aa',
   warning_300: '#fdba74',
+  warning_400: '#fb923c',
+  warning_500: '#f97316',
+  warning_600: '#ea580c',
 
   darkBlue_900: '#002851',
   darkGreen_: '#002408',
-
 };
 
 export const SIZES = {

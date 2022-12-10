@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import {COLORS, FONTS, icons} from '../constants';
+import {COLORS, FONTS, icons} from '../../constants';
 import {
   HeaderBar,
   FormInput,
@@ -15,12 +15,12 @@ import {
   FloatingButton,
   CustomDropdown,
   ConfirmToast,
-} from '../reuseableComponents';
-import {getDepartment} from './apiController/DepartmentController';
+} from '../../reuseableComponents';
+import {getDepartment} from '../apiController/DepartmentController';
 import {
   getDesignationByCompanyId,
   postDesignation,
-} from './apiController/DesignationController';
+} from '../apiController/DesignationController';
 import {useSelector} from 'react-redux';
 
 const CompanyDesignation = () => {
@@ -111,7 +111,7 @@ const CompanyDesignation = () => {
           <View
             style={{
               width: '90%',
-              backgroundColor: COLORS.white3,
+              backgroundColor: COLORS.green_50,
               padding: 20,
               borderRadius: 10,
             }}>

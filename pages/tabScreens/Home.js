@@ -16,6 +16,9 @@ import {
   getEmployeeCount,
 } from '../apiController/EmployeeController';
 import {useSelector} from 'react-redux';
+import {getDevice, postDevice} from '../apiController/DeviceController';
+import WifiManager from 'react-native-wifi-reborn';
+import {PermissionsAndroid} from 'react-native';
 
 const wait = timeout => {
   return new Promise(resolve => setTimeout(resolve, timeout));
@@ -41,22 +44,20 @@ const Home = ({navigation}) => {
     {
       id: 1,
       name: 'present',
-      img: require('../../assets/icons/present.png'),
       qty: 430,
     },
     {
       id: 2,
       name: 'absent',
-      img: require('../../assets/icons/absent.png'),
       qty: 30,
     },
     {
       id: 3,
       name: 'in leave',
-      img: require('../../assets/icons/Inleave.png'),
       qty: 50,
     },
   ];
+
   const [todayStatus, setTodayStatus] = React.useState(data);
 
   // get department
@@ -79,6 +80,7 @@ const Home = ({navigation}) => {
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     fetchEmployee();
+    fetchEmployeeCount();
     wait(1000).then(() => setRefreshing(false));
   }, []);
 
@@ -87,6 +89,86 @@ const Home = ({navigation}) => {
     fetchEmployeeCount();
   }, []);
 
+  //==========================================================
+  const [devices, setDevices] = React.useState([]);
+  const [wifiSsidList, setWifiSsidList] = React.useState([]);
+
+  const fetchDevice = async () => {
+    const response = await getDevice(company_id);
+    // console.log(response);
+    setDevices(response.data);
+  };
+
+  const getDifference = (wifiSsidList, devices) => {
+    // return wifiSsidList.filter(object1 => {
+    //   return devices.some(object2 => {
+    //     if (object1.SSID === object2.device_ssid) {
+    //       console.log('SSID MATCHEd', object1.SSID);
+    //       // alert('SSID MATCHEd', object1.SSID);
+    //     }
+    //   });
+    // });
+  };
+
+  console.log(getDifference(wifiSsidList, devices));
+
+  const getWiFiList = async () => {
+    const re_scan_wifi_list = await WifiManager.reScanAndLoadWifiList();
+    setWifiSsidList(re_scan_wifi_list);
+    // console.log('wifilist', re_scan_wifi_list);
+
+    // for (const list of re_scan_wifi_list) {
+    //   console.log('state ssid', newSsid);
+    //   if (list.SSID === newSsid) {
+    //     // setSsID(list.SSID);
+    //     console.log('SSID Matched ', list.SSID);
+    //     // console.log(ssID);
+    //     return false;
+    //   }
+    // }
+
+    // re_scan_wifi_list.map((ele, i) => {
+    //   setWifiSsid(ele.SSID);
+    //   ele.SSID === newSsid
+    //     ? console.log('Mached SSID', ele.SSID)
+    //     : console.log('Not Matched');
+    // });
+  };
+
+  async function allowPermission() {
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+      {
+        title: 'Location permission is required for WiFi connections',
+        message:
+          'This app needs location permission as this is required  ' +
+          'to scan for wifi networks.',
+        buttonNegative: 'DENY',
+        buttonPositive: 'ALLOW',
+      },
+    );
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      // You can now use react-native-wifi-reborn
+      console.log('You can now use react-native-wifi-reborn');
+      // let wifiList = await WifiManager.loadWifiList(); //wifiList will be Array<WifiEntry>
+      // console.log('wifi list',wifiList);
+      // wifiList.forEach(list => {
+      //   console.log(list.SSID)
+      // });
+    } else {
+      // Permission denied
+      console.log('Permission denied');
+    }
+  }
+
+  React.useEffect(() => {
+    allowPermission();
+    fetchDevice();
+
+    setInterval(() => {
+      getWiFiList();
+    }, 8000);
+  }, []);
   //==========================================================
 
   function renderHeader() {
@@ -101,10 +183,10 @@ const Home = ({navigation}) => {
           backgroundColor: COLORS.white,
         }}>
         <View style={{flexDirection: 'row'}}>
-          <View>
+          {/* <View>
             <ImageBackground
               style={{
-                backgroundColor: COLORS.green_200,
+                backgroundColor: COLORS.warning_600,
                 padding: 6,
                 borderRadius: 50,
                 elevation: 5,
@@ -115,24 +197,24 @@ const Home = ({navigation}) => {
                 style={{
                   height: 18,
                   width: 18,
-                  tintColor: COLORS.blue,
+                  tintColor: COLORS.white,
                 }}
               />
             </ImageBackground>
-          </View>
-          <View style={{marginLeft: SIZES.base}}>
+          </View> */}
+          <View style={{alignItems: 'center'}}>
             <Text
               style={{
                 fontSize: 20,
                 textTransform: 'capitalize',
-                color: COLORS.true_gray_700,
+                color: COLORS.true_gray_600,
               }}>
               {item.name}
             </Text>
             <Text
               style={{
-                fontSize: 22,
-                color: COLORS.true_gray_600,
+                fontSize: 20,
+                color: COLORS.true_gray_700,
                 fontWeight: 'bold',
               }}>
               {item.qty}
@@ -146,7 +228,7 @@ const Home = ({navigation}) => {
       <View
         style={{
           width: '100%',
-          height: 215,
+          height: 200,
         }}>
         <ImageBackground
           source={images.banner_04}
@@ -155,7 +237,7 @@ const Home = ({navigation}) => {
             flex: 1,
             alignItems: 'center',
           }}>
-          <View
+          {/* <View
             style={{
               // marginTop: SIZES.radius,
               width: '100%',
@@ -171,9 +253,15 @@ const Home = ({navigation}) => {
               }}>
               <Text></Text>
             </TouchableOpacity>
-          </View>
-          <View style={{alignItems: 'center', justifyContent: 'center'}}>
-            <Text style={{fontSize: 40, color: COLORS.white}}>
+          </View> */}
+          <View
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginTop: 20,
+            }}>
+            <Text
+              style={{fontSize: 40, color: COLORS.white, fontWeight: '500'}}>
               {companyDetail.company_name}
             </Text>
             <Text style={{...FONTS.h4, color: COLORS.white}}>
@@ -195,7 +283,7 @@ const Home = ({navigation}) => {
               </Text>
             </View>
           </View>
-          <View style={{position: 'absolute', bottom: '-15%'}}>
+          <View style={{position: 'absolute', bottom: '-18%'}}>
             <Text
               style={{
                 marginLeft: SIZES.radius,
@@ -227,7 +315,8 @@ const Home = ({navigation}) => {
           <Text
             style={{
               ...FONTS.h4,
-              color: COLORS.true_gray_700,
+              color: COLORS.true_gray_900,
+              textTransform: 'capitalize',
             }}>
             {item.department} ({item.employee_count})
           </Text>
@@ -246,8 +335,8 @@ const Home = ({navigation}) => {
                 key={i}
                 style={{
                   backgroundColor: COLORS.amber_400,
-                  paddingHorizontal: 10,
-                  paddingVertical: 5,
+                  paddingHorizontal: 8,
+                  paddingVertical: 4,
                   marginLeft: i === 0 ? 0 : 10,
                   marginBottom: 5,
                   borderRadius: 3,
@@ -267,7 +356,7 @@ const Home = ({navigation}) => {
                 }>
                 <Text
                   style={{
-                    fontSize: 15,
+                    fontSize: 14,
                     color: COLORS.true_gray_700,
                     textTransform: 'uppercase',
                   }}>
@@ -295,7 +384,7 @@ const Home = ({navigation}) => {
       <FlatList
         contentContainerStyle={{
           margin: 20,
-          marginTop: 70,
+          marginTop: 60,
         }}
         data={employee}
         keyExtractor={item => `${item._id}`}
@@ -324,7 +413,8 @@ const Home = ({navigation}) => {
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
       showsVerticalScrollIndicator={false}>
-      <View style={{flex: 1, paddingBottom: 130}}>
+      <View
+        style={{flex: 1, paddingBottom: 200, backgroundColor: COLORS.green_50}}>
         {renderHeader()}
         {renderEmployee()}
       </View>

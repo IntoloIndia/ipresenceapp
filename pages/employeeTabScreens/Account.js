@@ -2,12 +2,12 @@ import React from 'react';
 import {View, Text} from 'react-native';
 import {icons, COLORS, SIZES, images} from '../../constants';
 
-const Profile = () => {
+const Account = () => {
   return (
     <View style={{padding: 50}}>
-      <Text>Profile</Text>
+      <Text>User Account</Text>
     </View>
   );
 };
 
-export default Profile;
+export default Account;
