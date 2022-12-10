@@ -13,15 +13,15 @@ import {
   TextButton,
   FloatingButton,
   ConfirmToast,
-} from '../reuseableComponents';
-import {COLORS, SIZES, FONTS, icons, images} from '../constants';
+} from '../../reuseableComponents';
+import {COLORS, SIZES, FONTS, icons, images} from '../../constants';
 import {useSelector} from 'react-redux';
 import {
   postDepartment,
   getDepartment,
   editDepartment,
   deleteDepartment,
-} from './apiController/DepartmentController';
+} from '../apiController/DepartmentController'
 
 const CompanyDepartment = () => {
   // confirm toast & Modal

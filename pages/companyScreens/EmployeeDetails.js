@@ -7,8 +7,8 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native';
-import {HeaderBar} from '../reuseableComponents';
-import {SIZES, COLORS, FONTS, icons, images} from '../constants';
+import {HeaderBar} from '..//../reuseableComponents';
+import {SIZES, COLORS, FONTS, icons, images} from '../../constants';
 
 const EmployeeDetails = ({route}) => {
   const {Emp_details} = route.params;
@@ -46,7 +46,8 @@ const EmployeeDetails = ({route}) => {
                   color: COLORS.true_gray_600,
                   backgroundColor: COLORS.amber_300,
                   paddingHorizontal: 5,
-                  left: 5,textTransform:'uppercase'
+                  left: 5,
+                  textTransform: 'uppercase',
                 }}>
                 {Emp_details.employee_code}
               </Text>
@@ -148,7 +149,7 @@ const EmployeeDetails = ({route}) => {
         <Text style={{...FONTS.h6, color: COLORS.true_gray_800}}>
           Emloyee Attendance
         </Text>
-      </View>  
+      </View>
     );
   }
 

@@ -1,27 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Image, Modal } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {View, Text, TouchableOpacity, Image, Modal} from 'react-native';
 import {
   FormInput,
   TextButton,
   ConfirmToast,
   HeaderBar,
-} from '../reuseableComponents';
-import { FONTS, SIZES, COLORS, icons, images } from '../constants';
-import { getDevice, postDevice } from './apiController/DeviceController';
-import { useSelector } from 'react-redux';
-//===
+} from '../../reuseableComponents';
+import {FONTS, SIZES, COLORS, icons, images} from '../../constants';
+import {getDevice, postDevice} from '../apiController/DeviceController';
+import {useSelector} from 'react-redux';
 import WifiManager from 'react-native-wifi-reborn';
-import { PermissionsAndroid } from 'react-native';
+import {PermissionsAndroid} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import NetInfo, { useNetInfo } from '@react-native-community/netinfo';
+import NetInfo, {useNetInfo} from '@react-native-community/netinfo';
+import {getEmployeeAttendance} from '../apiController/EmployeeController';
 
 const DeviceConfig = () => {
-  // company data from redux
   const companyDetail = useSelector(state => state.company);
   const company_id = companyDetail._id;
-  // const company_id = '63515388d3e139468406f845';
 
-  const [deviceModal, setDeviceModal] = React.useState(true);
+  const [deviceModal, setDeviceModal] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
   const [update, setUpdate] = React.useState(false);
   const [remove, setRemove] = React.useState(false);
@@ -32,10 +30,10 @@ const DeviceConfig = () => {
   const [deviceSsid, setDeviceSsid] = React.useState('');
   const [devices, setDevices] = React.useState([]);
 
-  //
   const [wifiSsidList, setWifiSsidList] = useState([]);
   const [ssID, setSsID] = useState([]);
 
+  const [employeeAttendance, setEmployeeAttendance] = React.useState([]);
 
   // post device data
   const PostDevice = async () => {
@@ -61,110 +59,69 @@ const DeviceConfig = () => {
   // get department
   const fetchDevice = async () => {
     const response = await getDevice(company_id);
-    // console.log(response);
     setDevices(response.data);
   };
 
-  //======================
+  const dateFormat = date => {
+    let current_year = date.getFullYear();
+    let current_month = date.getMonth() + 1;
+    let current_date = ('0' + date.getDate()).slice(-2);
 
-  //========================================================
-
-  const getDifference = (wifiSsidList, devices) => {
-    return wifiSsidList.filter(object1 => {
-      return devices.some(object2 => {
-        if (object1.SSID === object2.device_ssid) {
-          console.log('SSID MATCHEd', object1.SSID);
-          // alert('SSID MATCHEd', object1.SSID);
-        }
-      });
-    });
+    const strDate = `${current_year}-${current_month}-${current_date}`;
+    console.log(strDate);
+    return strDate;
   };
 
-  console.log(getDifference(wifiSsidList, devices));
-  //========================================================
+  //----------------------------------------------
 
-  const getWiFiList = async () => {
-    const re_scan_wifi_list = await WifiManager.reScanAndLoadWifiList();
-    setWifiSsidList(re_scan_wifi_list);
-    console.log('wifilist', re_scan_wifi_list);
+  const timeFormat = date => {
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
 
-    // for (const list of re_scan_wifi_list) {
-    //   console.log('state ssid', newSsid);
-    //   if (list.SSID === newSsid) {
-    //     // setSsID(list.SSID);
-    //     console.log('SSID Matched ', list.SSID);
-    //     // console.log(ssID);
-    //     return false;
-    //   }
-    // }
+    hours %= 12;
+    hours = hours || 12;
+    minutes = minutes < 10 ? `0${minutes}` : minutes;
 
-    // re_scan_wifi_list.map((ele, i) => {
-    //   setWifiSsid(ele.SSID);
-    //   ele.SSID === newSsid
-    //     ? console.log('Mached SSID', ele.SSID)
-    //     : console.log('Not Matched');
-    // });
+    const strTime = `${('0' + hours).slice(-2)}:${minutes} ${ampm}`;
+    console.log(strTime)
+    return strTime;
   };
 
-  async function allowPermission() {
-    const granted = await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-      {
-        title: 'Location permission is required for WiFi connections',
-        message:
-          'This app needs location permission as this is required  ' +
-          'to scan for wifi networks.',
-        buttonNegative: 'DENY',
-        buttonPositive: 'ALLOW',
-      },
+  //----------------------------------------------
+  const fetchEmployeeAttendance = async () => {
+    const response = await getEmployeeAttendance(
+      company_id,
+      current_year,
+      current_month,
+      '638433aac4c9d31144e21c68',
     );
-    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-      // You can now use react-native-wifi-reborn
-      console.log('You can now use react-native-wifi-reborn');
-      // let wifiList = await WifiManager.loadWifiList(); //wifiList will be Array<WifiEntry>
-      // console.log('wifi list',wifiList);
-      // wifiList.forEach(list => {
-      //   console.log(list.SSID)
-      // });
-    } else {
-      // Permission denied
-      console.log('Permission denied');
+    if (response.status === 200) {
+      setEmployeeAttendance(response.data);
+      console.log('data', response.data);
     }
   };
 
-  useEffect(() => {
-    async function allowPermission() {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-        {
-          title: 'Location permission is required for WiFi connections',
-          message:
-            'This app needs location permission as this is required  ' +
-            'to scan for wifi networks.',
-          buttonNegative: 'DENY',
-          buttonPositive: 'ALLOW',
-        },
-      );
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        // You can now use react-native-wifi-reborn
-        console.log('You can now use react-native-wifi-reborn');
-        // let wifiList = await WifiManager.loadWifiList(); //wifiList will be Array<WifiEntry>
-        // console.log('wifi list',wifiList);
-        // wifiList.forEach(list => {
-        //   console.log(list.SSID)
-        // });
-      } else {
-        // Permission denied
-        console.log('Permission denied');
-      }
-    }
-    allowPermission();
-    fetchDevice();
+  //=================================
+  //New library Concept
 
-    setInterval(() => {
-      getWiFiList();
-    }, 3000);
-  }, []);
+  const [ssid, setSSID] = React.useState('');
+
+  const netInfo = useNetInfo();
+  const isConnected = netInfo.isConnected;
+
+  function deviceScan() {
+    if (isConnected == true) {
+      setSSID(netInfo.details.ssid);
+      timeFormat(new Date());
+    }
+  }
+
+  setTimeout(() => {
+    deviceScan();
+  }, 1000);
+
+  //------------------------------------------
 
   function renderDeviceModal() {
     return (
@@ -189,7 +146,7 @@ const DeviceConfig = () => {
                 alignItems: 'center',
                 justifyContent: 'space-between',
               }}>
-              <Text style={{ ...FONTS.h6, color: COLORS.true_gray_600 }}>
+              <Text style={{...FONTS.h6, color: COLORS.true_gray_600}}>
                 Config New Device
               </Text>
               <TouchableOpacity
@@ -208,7 +165,7 @@ const DeviceConfig = () => {
                 />
               </TouchableOpacity>
             </View>
-            <View style={{ marginTop: 20 }}>
+            <View style={{marginTop: 20}}>
               <FormInput
                 placeholder={'Device name'}
                 icon={icons.device_config}

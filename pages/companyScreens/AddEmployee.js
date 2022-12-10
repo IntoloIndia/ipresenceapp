@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import {COLORS, FONTS, icons} from '../constants';
+import {COLORS, FONTS, icons} from '../../constants';
 import {
   HeaderBar,
   FormInput,
@@ -15,14 +15,14 @@ import {
   FloatingButton,
   CustomDropdown,
   ConfirmToast,
-} from '../reuseableComponents';
-import {getDepartment} from './apiController/DepartmentController';
-import {getDesignation} from './apiController/DesignationController';
+} from '../../reuseableComponents';
+import {getDepartment} from '../apiController/DepartmentController';
+import {getDesignation} from '../apiController/DesignationController';
 import {useSelector} from 'react-redux';
 import {
   getEmployee,
   employeeRegistration,
-} from './apiController/EmployeeController';
+} from '../apiController/EmployeeController';
 
 const CompanyTeamRegister = () => {
   // confirm toast & Modal
@@ -40,7 +40,7 @@ const CompanyTeamRegister = () => {
   const [email, setEmail] = React.useState('');
   const [mobile, setMobile] = React.useState('');
   const [empCode, setEmpCode] = React.useState('');
-  console.log(empCode);
+
   //Department Dropdown
   const [openDep, setOpenDep] = useState(false);
   const [depValue, setDepValue] = useState(null);
@@ -73,6 +73,7 @@ const CompanyTeamRegister = () => {
       employee_code: empCode,
     };
     const response = await employeeRegistration(userData);
+
     if (response.status === 200) {
       setSuccess(true);
       setTeamAddModal(false);
@@ -139,7 +140,7 @@ const CompanyTeamRegister = () => {
           }}>
           <View
             style={{
-              top:20,
+              top: 20,
               width: '90%',
               backgroundColor: COLORS.green_50,
               padding: 20,

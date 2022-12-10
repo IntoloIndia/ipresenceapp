@@ -52,7 +52,7 @@ const SignIn = ({navigation}) => {
       setCompanyMobileNo('');
       setCompanyPassword('');
       setTimeout(() => {
-        navigation.navigate('Tabs');
+        navigation.navigate('CompanyTabs');
       }, 2500);
     } else {
       setWarnMessage(response.payload.message);
@@ -70,12 +70,13 @@ const SignIn = ({navigation}) => {
       password: employeePassword,
     };
     const response = await dispatch(userLogin(employeeData));
+    // console.log(response)
     if (response.payload.status) {
       setSuccess(true);
       setEmployeeId('');
       setEmployeePassword('');
       setTimeout(() => {
-        navigation.navigate('Tabs');
+        navigation.navigate('EmployeeTabs');
       }, 2500);
     } else {
       setWarnMessage(response.payload.message);

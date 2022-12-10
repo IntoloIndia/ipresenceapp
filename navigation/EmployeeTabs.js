@@ -1,12 +1,12 @@
 import * as React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Home, Profile, Account, More} from '../pages/tabScreens';
+import {Home, Account} from '../pages/employeeTabScreens';
 import {COLORS, icons} from '../constants';
 import {TabIcon} from '../reuseableComponents';
 
 const Tab = createBottomTabNavigator();
 
-export default function App() {
+export default function EmployeeTabs() {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -19,7 +19,8 @@ export default function App() {
           elevation: 0,
           backgroundColor: COLORS.white,
           borderTopColor: 'transparent',
-          height: 70,
+          height: 100,
+          // paddingHorizontal:5
         },
       }}>
       <Tab.Screen
@@ -32,16 +33,7 @@ export default function App() {
           ),
         }}
       />
-      <Tab.Screen
-        name="Profile"
-        component={Profile}
-        options={{
-          headerShown: false,
-          tabBarIcon: ({focused}) => (
-            <TabIcon focused={focused} icon={icons.profile} name={'Profile'} />
-          ),
-        }}
-      />
+
       <Tab.Screen
         name="Account"
         component={Account}
@@ -49,16 +41,6 @@ export default function App() {
           headerShown: false,
           tabBarIcon: ({focused}) => (
             <TabIcon focused={focused} icon={icons.account} name={'Account'} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="More"
-        component={More}
-        options={{
-          headerShown: false,
-          tabBarIcon: ({focused}) => (
-            <TabIcon focused={focused} icon={icons.more} name={'More'} />
           ),
         }}
       />

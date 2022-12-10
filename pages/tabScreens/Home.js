@@ -100,14 +100,14 @@ const Home = ({navigation}) => {
   };
 
   const getDifference = (wifiSsidList, devices) => {
-    return wifiSsidList.filter(object1 => {
-      return devices.some(object2 => {
-        if (object1.SSID === object2.device_ssid) {
-          console.log('SSID MATCHEd', object1.SSID);
-          // alert('SSID MATCHEd', object1.SSID);
-        }
-      });
-    });
+    // return wifiSsidList.filter(object1 => {
+    //   return devices.some(object2 => {
+    //     if (object1.SSID === object2.device_ssid) {
+    //       console.log('SSID MATCHEd', object1.SSID);
+    //       // alert('SSID MATCHEd', object1.SSID);
+    //     }
+    //   });
+    // });
   };
 
   console.log(getDifference(wifiSsidList, devices));
@@ -115,7 +115,7 @@ const Home = ({navigation}) => {
   const getWiFiList = async () => {
     const re_scan_wifi_list = await WifiManager.reScanAndLoadWifiList();
     setWifiSsidList(re_scan_wifi_list);
-    console.log('wifilist', re_scan_wifi_list);
+    // console.log('wifilist', re_scan_wifi_list);
 
     // for (const list of re_scan_wifi_list) {
     //   console.log('state ssid', newSsid);
